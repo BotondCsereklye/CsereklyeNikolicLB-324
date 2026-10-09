@@ -4,6 +4,8 @@ Leistungsbeurteilung M324 DevOps, Botond Csereklye. Grundlage: die offizielle Ta
 
 Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324
 
+**GitHub-Stand bei der Schlussprüfung:** Das Repository ist aktuell privat. Die LB verlangt ein öffentliches Repository. Ein vorübergehend mit HTTP 403 abgewiesener Push der Schlussdokumentation auf `feature/7-abgabenachweise` war beim erneuten Versuch erfolgreich. Die Funktionsänderungen, Dokumentation und erfolgreichen CI-Läufe sind auf GitHub vorhanden.
+
 **Azure-URL: noch offen.** Es ist noch keine laufende Azure-Auslieferung nachgewiesen. Aufgabe 4 ist deshalb nicht vollständig erfüllt.
 
 ## Lokal starten
@@ -86,12 +88,16 @@ GitHub erhält die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUB
 
 Eine eigene Issue und ein aus `dev` erstellter Feature-Branch dokumentieren die Änderung. Der vorgegebene Test `test_add_entry_with_happiness` prüft POST `/add_entry`, Redirect `/`, Inhalt und Stimmung `😃`. Die `client`-Fixture meldet den Testclient an; die Eintragsliste wird vor und nach jedem Test geleert.
 
-Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen in [docs/NACHWEISE.md](docs/NACHWEISE.md). Es wird kein fremdes Review behauptet.
+[Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde über `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach erfolgreicher GitHub-CI in `dev` umgesetzt. Der Feature-Branch bleibt erhalten. Der aktuelle Funktionsstand 0.2.0 liegt auf `dev`; `main` erhält ihn erst beim geprüften Azure-Release.
+
+Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen in [docs/NACHWEISE.md](docs/NACHWEISE.md). 21 lokale Tests, die echte dev-CI und Browserprüfungen auf Desktop/Mobilansicht sind erfolgreich. Es wird kein fremdes Review behauptet.
 
 ## Artefakte und Abgabe
 
 `python scripts/package_release.py` erstellt `dist/deploy.zip` und dessen SHA-256. Das ZIP enthält nur App, Runtime-Abhängigkeiten, Templates, CSS und Versionsdatei; weder `.env` noch `.venv`, Tests oder Unterrichtsdateien.
 
 Moodle erhält die Repository-URL und `CsereklyeBotondLB-324.zip` mit genau einem gleichnamigen Ordner. Vor dem Upload [docs/ABGABECHECK.md](docs/ABGABECHECK.md) selbst prüfen. Azure, Moodle-Upload und die verlangte Löschung nach tatsächlichem Abschluss werden nicht fälschlich als erledigt angegeben.
+
+Das Abgabe-ZIP enthält den lokal geprüften Stand samt Dokumentation, jedoch keine `.git`-Daten. Die zusätzliche Datei `CsereklyeBotondLB-324.bundle` sichert die vollständige Git-Historie und die vorhandenen Branches für die Handprüfung. Bei Bedarf mit `git clone CsereklyeBotondLB-324.bundle` in einen neuen Ordner klonen; die Hooks danach wie oben installieren.
 
 Grundlagen: Modulaufträge zu Anforderungen, pytest, Hooks, GitHub Flow und CI. Die konkreten Abweichungen der LB (Tests bei Push, Zielast dev, Stimmung) haben Vorrang. Technische Quellen: [pre-commit Hook-Stufen](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages), [GitHub Workflow-Syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), [Azure GitHub-Actions-Deployment](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions), [Azure Python-Konfiguration](https://learn.microsoft.com/en-us/azure/app-service/configure-language-python).
