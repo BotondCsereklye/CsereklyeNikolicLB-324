@@ -23,7 +23,26 @@ Am 9. Oktober 2026 wurden die Modulaufträge in `M324_Aufgaben` und die konkrete
 5. Ein tatsächlicher Push dieses Test-Commits wurde vom pre-push-Hook verhindert: 4 fehlgeschlagene und 17 erfolgreiche Tests; der fehlerhafte Stand wurde nicht als Remote-Branch veröffentlicht.
 6. Erst danach wurde `Entry.happiness` ergänzt, das Formular erweitert und die Stimmung am Eintrag dargestellt. Fehlende Werte bleiben für bestehende Aufrufe neutral; ungültige Werte werden abgelehnt. Die Version steigt von 0.1.0 auf 0.2.0.
 
-Die endgültigen PR-/CI-Verknüpfungen und Abschlussprüfungen werden nach den tatsächlichen Läufen ergänzt. Es wird kein fremdes oder menschliches Review behauptet.
+7. [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) zielte auf `dev` und bestand die echte GitHub-CI: [Lauf 37935212233](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37935212233). Danach wurde er mit Merge-Commit `bd5d937` übernommen. Der Feature-Branch bleibt lokal und auf GitHub vorhanden.
+8. Issue #5 wurde nach dem erfolgreichen Merge nach `dev` manuell als erledigt geschlossen. GitHubs `Closes`-Automatik schliesst Issues erst beim Merge auf den Standardast `main`; deshalb wird die manuelle Schliessung hier ausdrücklich angegeben.
+
+## Abschlussprüfungen
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| Gesamte lokale Testsuite | 21 Tests erfolgreich; inklusive des in der LB vorgegebenen Happiness-Tests |
+| Coverage der Anwendung | 97,62 % kombinierte Statement-/Branch-Abdeckung; Mindestwert 80 % durch Konfiguration geprüft |
+| Formatierung beim Commit | Tatsächlich automatisch ausgeführt und Dateien verändert; danach erfolgreich erneut committed |
+| Tests beim Push | Fehlerhafter Stand tatsächlich blockiert; korrigierter Stand anschliessend erfolgreich gepusht |
+| Plattform-CI | [PR #3](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/3), [erfolgreicher Lauf 37933992918](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37933992918), Merge nach dev `40aacaa` |
+| Infrastruktur auf Standardast | [PR #4](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/4), Merge `bc8773e`; kein Azure-Erfolg damit behauptet |
+| Branch-Schutz | `dev` verlangt PR und erfolgreichen `pytest`-Check; `main` verlangt PR; Regeln gelten auch für Administratoren; automatische Branch-Löschung ausgeschaltet |
+| Browser auf Desktop | Isoliertes Chrome-Fenster mit Playwright, 1280 × 900: falsches/richtiges Passwort, Eintrag mit 😃, Neuladen und Logout erfolgreich; Screenshot visuell geprüft |
+| Browser in Mobilansicht | Isolierter Browser-Kontext, 390 × 844: derselbe Ablauf erfolgreich; kein horizontaler Überlauf; Screenshot visuell geprüft. Kein physisches Mobilgerät behauptet. |
+| Gebautes Laufzeit-ZIP | In getrennten Ordner entpackt und mit echtem Gunicorn-Prozess gestartet. Version 0.2.0 und Commit `bd5d937` über HTTP bestätigt; Login, Stimmung, Escaping und Logout erfolgreich. |
+| Geheimnisse | Lokale `.env` ist ignoriert und unversioniert; Laufzeit-ZIP enthält nur die feste Allowlist aus `package_release.py` |
+
+Die abschliessende Dokumentation gehört zu [Issue #7](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/7). Der Release-PR nach `main` bleibt zur manuellen Prüfung und bis zur Azure-Einrichtung als Entwurf offen. Ein fremdes oder menschliches Review wurde nicht durchgeführt.
 
 ## Offene Nachweise
 
