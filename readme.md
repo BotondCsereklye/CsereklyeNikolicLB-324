@@ -74,7 +74,7 @@ Issue → Feature-Branch aus dev → Commit → Push → PR nach dev
       → geprüfter Release-PR dev nach main → Azure-Auslieferung
 ```
 
-`main` ist für die auszuliefernde Version reserviert. Bis Azure eingerichtet ist, bleibt die Happiness-Änderung in `dev`. Die Feature-Äste bleiben für die LB erhalten.
+`main` ist für die auszuliefernde Version reserviert. Während der Schlussprüfung wurde `feature/7-abgabenachweise` über PR #8 nach `main` gemergt; dadurch enthält auch `main` die Happiness-Funktion. Der ausgelöste Azure-Job wurde wegen fehlender Konfiguration übersprungen. Die Feature-Äste bleiben für die LB erhalten.
 
 ## Aufgabe 4 Azure und Passwort übertragen
 
@@ -88,7 +88,7 @@ GitHub erhält die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUB
 
 Eine eigene Issue und ein aus `dev` erstellter Feature-Branch dokumentieren die Änderung. Der vorgegebene Test `test_add_entry_with_happiness` prüft POST `/add_entry`, Redirect `/`, Inhalt und Stimmung `😃`. Die `client`-Fixture meldet den Testclient an; die Eintragsliste wird vor und nach jedem Test geleert.
 
-[Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde über `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach erfolgreicher GitHub-CI in `dev` umgesetzt. Der Feature-Branch bleibt erhalten. Der aktuelle Funktionsstand 0.2.0 liegt auf `dev`; `main` erhält ihn erst beim geprüften Azure-Release.
+[Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde über `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach erfolgreicher GitHub-CI in `dev` umgesetzt. Der Feature-Branch bleibt erhalten. Der Funktionsstand 0.2.0 liegt inzwischen auf `dev` und durch [PR #8](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/8) auch auf `main`; eine erfolgreiche Azure-Auslieferung steht weiterhin aus.
 
 Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen in [docs/NACHWEISE.md](docs/NACHWEISE.md). 21 lokale Tests, die echte dev-CI und Browserprüfungen auf Desktop/Mobilansicht sind erfolgreich. Es wird kein fremdes Review behauptet.
 
