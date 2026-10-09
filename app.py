@@ -28,7 +28,8 @@ app.config.update(
 )
 if os.getenv("WEBSITE_HOSTNAME") and not os.getenv("SECRET_KEY"):
     raise RuntimeError("SECRET_KEY muss in Azure App settings gesetzt sein.")
-VERSION = "0.1.0"
+VERSION = "0.2.0"
+MOODS = {"😃", "😐", "😞"}
 release_file = Path(__file__).with_name("release.json")
 release = json.loads(release_file.read_text()) if release_file.exists() else {}
 entries = []
@@ -38,6 +39,7 @@ entries = []
 class Entry:
     content: str
     timestamp: datetime = field(default_factory=datetime.now)
+    happiness: str = "😐"
 
 
 @app.before_request
@@ -110,7 +112,10 @@ def add_entry():
     content = request.form.get("content", "").strip()
     if not content or len(content) > 5000:
         abort(400, description="Ein Eintrag braucht 1 bis 5000 Zeichen.")
-    entry = Entry(content=content)
+    happiness = request.form.get("happiness", "😐")
+    if happiness not in MOODS:
+        abort(400, description="Bitte eine der angebotenen Stimmungen auswählen.")
+    entry = Entry(content=content, happiness=happiness)
     entries.append(entry)
     return redirect(url_for("index"))
 
