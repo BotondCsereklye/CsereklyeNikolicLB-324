@@ -1,25 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 
 <head>
-    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anmelden · Tagebbbuch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <h1>Login</h1>
-    <form method="POST" action="/login">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
+    <header><a class="brand" href="/">Tagebbbuch</a></header>
+    <main>
+    <h1>Anmelden</h1>
+    <form class="panel login-panel" method="POST" action="/login">
+        <label for="password">Passwort</label>
+        <input id="password" type="password" name="password" required autocomplete="current-password">
+        <button type="submit">Anmelden</button>
     </form>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul class=flashes>
+    <ul class="messages" role="alert">
         {% for message in messages %}
         <li>{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
     {% endwith %}
+    </main>
 </body>
 
 </html>
