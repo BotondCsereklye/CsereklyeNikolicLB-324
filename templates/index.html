@@ -18,12 +18,20 @@
         <h2>Neuer Eintrag</h2>
         <label for="content">Was möchtest du festhalten?</label>
         <textarea id="content" name="content" rows="4" maxlength="5000" required placeholder="Dein Tag in deinen Worten …"></textarea>
+        <fieldset>
+            <legend>Wie fühlst du dich?</legend>
+            <div class="moods">
+                <label><input type="radio" name="happiness" value="😃"> 😃 Gut</label>
+                <label><input type="radio" name="happiness" value="😐" checked> 😐 Neutral</label>
+                <label><input type="radio" name="happiness" value="😞"> 😞 Nicht so gut</label>
+            </div>
+        </fieldset>
         <button type="submit">Eintrag speichern</button>
     </form>
     <h2>Deine Einträge</h2>
     <ul class="entries">
         {% for entry in entries %}
-        <li class="entry"><time datetime="{{ entry.timestamp.isoformat() }}">{{ entry.timestamp.strftime('%d.%m.%Y · %H:%M') }}</time><p>{{ entry.content }}</p></li>
+        <li class="entry"><time datetime="{{ entry.timestamp.isoformat() }}">{{ entry.timestamp.strftime('%d.%m.%Y · %H:%M') }}</time> <span aria-label="Stimmung">{{ entry.happiness }}</span><p>{{ entry.content }}</p></li>
         {% else %}
         <li class="muted">Hier erscheinen deine Einträge.</li>
         {% endfor %}
