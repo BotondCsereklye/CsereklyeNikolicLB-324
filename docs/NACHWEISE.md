@@ -4,7 +4,7 @@
 
 Am 9. Oktober 2026 wurden die Modulaufträge in `M324_Aufgaben` und die konkrete `LB-324.docx` ausgewertet. Das dortige `tagebbbuch.zip` liefert den Ausgangscode. Die `.env` aus dem Archiv und die enthaltene verschachtelte Dublette wurden nicht übernommen. Alte Prüfungen oder private Projekte werden nicht verwendet.
 
-Öffentliches Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324
+Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324. Es wurde öffentlich angelegt, ist bei der Schlussprüfung am 9. Oktober 2026 jedoch privat. Die GitHub-API meldet `disabled: false`; die Anforderung „öffentlich“ ist aktuell nicht erfüllt.
 
 | Schritt | Tatsächlicher Nachweis |
 | --- | --- |
@@ -42,10 +42,11 @@ Am 9. Oktober 2026 wurden die Modulaufträge in `M324_Aufgaben` und die konkrete
 | Gebautes Laufzeit-ZIP | In getrennten Ordner entpackt und mit echtem Gunicorn-Prozess gestartet. Version 0.2.0 und Commit `bd5d937` über HTTP bestätigt; Login, Stimmung, Escaping und Logout erfolgreich. |
 | Geheimnisse | Lokale `.env` ist ignoriert und unversioniert; Laufzeit-ZIP enthält nur die feste Allowlist aus `package_release.py` |
 
-Die abschliessende Dokumentation gehört zu [Issue #7](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/7). Der Release-PR nach `main` bleibt zur manuellen Prüfung und bis zur Azure-Einrichtung als Entwurf offen. Ein fremdes oder menschliches Review wurde nicht durchgeführt.
+Die abschliessende Dokumentation gehört zu [Issue #7](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/7). Der Push von `feature/7-abgabenachweise` wurde mit „Your repository is disabled“ und HTTP 403 abgewiesen, obwohl die anschliessende API-Abfrage `disabled: false` und Administrator-/Push-Rechte meldete. Die Ursache ist nicht bestätigt. Die Schlussdokumentation ist deshalb nur lokal committed und im Abgabe-ZIP enthalten; sie wurde noch nicht über einen PR nach `dev` übernommen. Ein Happiness-Release-PR nach `main` wurde noch nicht angelegt. Ein fremdes oder menschliches Review wurde nicht durchgeführt.
 
 ## Offene Nachweise
 
+- Öffentliche GitHub-Sichtbarkeit und erfolgreicher Push/PR der Schlussdokumentation stehen aus; die vorhandenen Funktions-PRs und CI-Nachweise bleiben davon getrennt belegt.
 - Azure-App, OIDC-Identität, Runtime-Geheimnisse und reale App-URL sind noch nicht eingerichtet/verifiziert.
 - Kein erfolgreicher Azure-Deployment-Lauf und keine Azure-Anmeldeprüfung werden behauptet.
 - Die manuelle Schlussprüfung und der Moodle-Upload erfolgen durch den Benutzer.
