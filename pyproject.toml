@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.pytest.ini_options]
+testpaths = ['tests', 'test_app.py']
+addopts = '-ra'
+
+[tool.coverage.run]
+source = ['app']
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+exclude_lines = ['if __name__ == .__main__.:']

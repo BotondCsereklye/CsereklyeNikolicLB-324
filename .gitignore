@@ -1,2 +1,14 @@
 __pycache__
 .env
+.env.*
+!.env.example
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+playwright-report/
+test-results/
+dist/
+instance/
+.DS_Store
