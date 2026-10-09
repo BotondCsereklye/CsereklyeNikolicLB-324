@@ -1,0 +1,72 @@
+name: Anforderung
+description: Funktionale Anforderung, Qualitätsanforderung oder Randanforderung erfassen
+title: '[Anforderung] '
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Formuliere die Anforderung als Zielsystem + Priorität + Systemaktivität +
+        Ergänzungen + Funktionalität + Bedingungen. Verwende muss/soll/wird,
+        für Benutzerfunktionen „dem Benutzer die Möglichkeit bieten“,
+        für Schnittstellen „fähig sein“, zeitlich „wenn“ und logisch „falls“.
+        Weise den Typ rechts manuell über das passende Label zu.
+  - type: input
+    id: zielsystem
+    attributes:
+      label: Zielsystem
+      placeholder: Tagebbbuch
+    validations:
+      required: true
+  - type: dropdown
+    id: prioritaet
+    attributes:
+      label: Priorität
+      options:
+        - muss (hoch)
+        - soll (mittel)
+        - wird (niedrig)
+    validations:
+      required: true
+  - type: dropdown
+    id: aktivitaet
+    attributes:
+      label: Systemaktivität
+      options:
+        - dem Benutzer die Möglichkeit bieten (Benutzerfunktion)
+        - selbständig handeln (Systemfunktion)
+        - fähig sein (Schnittstelle)
+    validations:
+      required: true
+  - type: input
+    id: ergaenzungen
+    attributes:
+      label: Ergänzungen
+      description: Optionaler Kontext, betroffene Schnittstelle oder Datenquelle.
+  - type: textarea
+    id: funktionalitaet
+    attributes:
+      label: Funktionalität
+      description: Beschreibe die gewünschte Funktion und ihren Nutzen.
+    validations:
+      required: true
+  - type: textarea
+    id: bedingungen
+    attributes:
+      label: Bedingungen
+      description: Zeitliche Bedingungen mit „wenn“, logische Bedingungen mit „falls“; sonst „keine“.
+    validations:
+      required: true
+  - type: textarea
+    id: satz
+    attributes:
+      label: Vollständiger Anforderungssatz
+      placeholder: Das Tagebbbuch muss dem Benutzer die Möglichkeit bieten, eine Stimmung anzugeben, wenn er einen Eintrag verfasst.
+    validations:
+      required: true
+  - type: textarea
+    id: abnahme
+    attributes:
+      label: Abnahmekriterien und Testfall
+      description: Ausgangslage (Given), Aktion (When), erwartetes Ergebnis (Then) und Name des automatisierten Tests.
+    validations:
+      required: true
