@@ -20,7 +20,9 @@ Diese Tabelle legt die Zuständigkeiten für den Abschluss fest. Sie ist kein r�
 
 Die Zusammenarbeit beider Projektpartner ist bestätigt. Eine konkrete Zuordnung der bisherigen Arbeit zu Aleksandar wurde noch nicht angegeben. Die vorhandenen Git-Commits laufen unter Botonds Konto; daraus lässt sich Aleksandars Anteil an gemeinsamer Arbeit nicht zuverlässig ableiten. Seine tatsächlichen Beiträge werden nach Rückmeldung mit dem passenden Nachweis ergänzt.
 
-Aleksandars GitHub-Benutzername ist noch nicht bekannt. Deshalb wird weder ein fremdes Konto zugewiesen noch eine bereits erfolgte Einladung behauptet. Die Zuständigkeit ist bis dahin in den Issue-Beschreibungen festgehalten.
+Aleksandars GitHub-Benutzername ist **AleksZyro**. Die authentifizierte GitHub-Verbindung wurde am 26. Oktober 2026 diesem Profil zugeordnet; sie besitzt Schreibzugriff auf das private Repository. Es wurde keine neue Einladung versendet.
+
+Die aktuelle Qualitätssicherung und fachliche Gegenprüfung erfolgt KI-gestützt in seinem Auftrag unter [Issue #17](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/17) auf `feature/17-aleksandar-abnahme`. Ausgeführte Prüfungen, Ergebnisse und Grenzen stehen in [ABNAHME_ALEKSANDAR.md](ABNAHME_ALEKSANDAR.md). Das belegt die dort dokumentierte Unterstützung, keine persönliche manuelle Browserprüfung oder rückwirkende Implementierung durch Aleksandar. Er muss die Unterlagen und Zusammenhänge selbst erklären können.
 
 ## Stand der Arbeitspakete
 

@@ -2,6 +2,8 @@
 
 Die konkrete LB bewertet 33 Punkte; Aufgabe 5 zählt doppelt. Offene Punkte sind keine erfüllten Kriterien.
 
+Das zusätzlich bereitgestellte Kompetenzraster gewichtet A1 bis E1 mit 20/10/30/20/20 Prozent. Die Nachweise dafür stehen in [RASTER.md](RASTER.md); die endgültige Bewertung erfolgt durch die Lehrperson. Die aktuelle KI-gestützte Gegenprüfung im Auftrag Aleksandars steht in [ABNAHME_ALEKSANDAR.md](ABNAHME_ALEKSANDAR.md).
+
 | Kriterium | Prüfschritt |
 | --- | --- |
 | 0 Administration | Ordner und ZIP heissen `CsereklyeBotondLB-324`; ZIP enthält genau einen gleichnamigen Projektordner. **Bewusst aufgeschoben:** Das Repository bleibt gemäss Auftrag vom 26. Oktober 2026 privat; die öffentliche Sichtbarkeit der LB ist noch nicht erfüllt. |

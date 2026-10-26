@@ -1,5 +1,9 @@
 # Durchgeführte Arbeit und Nachweise
 
+## Aktuelle Gegenprüfung im Auftrag Aleksandars
+
+Die erneute KI-gestützte Prüfung vom 26. Oktober 2026 ist separat in [ABNAHME_ALEKSANDAR.md](ABNAHME_ALEKSANDAR.md) dokumentiert und gehört zu [Issue #17](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/17). Die folgenden älteren Angaben bleiben historische Projektergebnisse. Die neue Gegenprüfung behauptet weder eine manuelle Prüfung durch Aleksandar noch eine erfolgreiche Azure-Auslieferung.
+
 ## Aktualisierung vom 26. Oktober 2026
 
 Die folgenden älteren Abschnitte dokumentieren die Prüfungen vom 9. Oktober. Für den aktuellen Abschluss wurden [Issue #12](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/12) für Dokumentation und Teamaufteilung, [Issue #13](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/13) für die automatische Artefaktprüfung und [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) für den weiterhin offenen Azure-Nachweis angelegt. Die Umsetzung erfolgt auf `feature/12-raster-team-abschluss` aus `dev`.
