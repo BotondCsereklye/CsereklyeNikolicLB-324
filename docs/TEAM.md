@@ -25,6 +25,6 @@ Aleksandars GitHub-Benutzername ist noch nicht bekannt. Deshalb wird weder ein f
 ## Stand der Arbeitspakete
 
 - Grundlagen, Werkzeugvergleich und Rasterzuordnung sind als Projektunterlagen ausgearbeitet.
-- Die automatische Laufzeitprüfung wird im gemeinsamen Projekt unter Issue #13 umgesetzt und über die dev-CI verifiziert.
+- Die automatische Laufzeitprüfung ist im gemeinsamen Projekt unter Issue #13 umgesetzt; die tatsächliche dev-CI zu PR #15 hat den Implementierungsstand erfolgreich geprüft.
 - Azure-Einrichtung und Abnahme hängen vom authentifizierten Azure-Zugang ab und bleiben in Issue #14 offen.
 - Das Repository bleibt auf ausdrücklichen Wunsch vom 26. Oktober 2026 privat. Die in der LB verlangte öffentliche Sichtbarkeit ist damit bewusst aufgeschoben.
