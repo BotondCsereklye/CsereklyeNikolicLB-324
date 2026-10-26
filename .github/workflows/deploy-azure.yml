@@ -3,6 +3,7 @@ name: Azure Auslieferung main
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,14 +13,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    if: vars.AZURE_WEBAPP_NAME != ''
+  verify:
+    name: Release-Artefakt prüfen
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    environment: production
-    permissions:
-      contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,12 +29,57 @@ jobs:
         run: python -m pytest
       - name: Laufzeit-Artefakt ohne Geheimnisse erstellen
         run: python scripts/package_release.py
+      - name: Genau dieses ZIP mit Gunicorn und HTTP prüfen
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: python scripts/smoke_runtime.py dist/deploy.zip --expected-commit "$EXPECTED_SHA"
       - name: Artefakt mit Commit aufbewahren
         uses: actions/upload-artifact@v4
         with:
           name: tagebbbuch-${{ github.sha }}
           path: dist/deploy.zip
           retention-days: 14
+      - name: Fehlende Azure-Konfiguration sichtbar melden
+        if: vars.AZURE_WEBAPP_NAME == ''
+        run: |
+          echo '::warning::AZURE_WEBAPP_NAME fehlt. Artefakt geprüft; keine Azure-Auslieferung.'
+          echo 'Azure-Auslieferung offen: AZURE_WEBAPP_NAME und OIDC-Zugang konfigurieren (Issue #14).' >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    name: Auf Azure ausliefern
+    needs: verify
+    if: github.ref == 'refs/heads/main' && vars.AZURE_WEBAPP_NAME != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Geprüftes Artefakt desselben Laufs laden
+        uses: actions/download-artifact@v4
+        with:
+          name: tagebbbuch-${{ github.sha }}
+          path: dist
+      - name: OIDC-Konfiguration auf Vollständigkeit prüfen
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        shell: bash
+        run: |
+          missing=0
+          for setting in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID; do
+            if [ -z "${!setting}" ]; then
+              echo "::error::GitHub-Secret $setting fehlt."
+              missing=1
+            fi
+          done
+          exit "$missing"
       - name: Azure über OpenID Connect anmelden
         uses: azure/login@v2
         with:

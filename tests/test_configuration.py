@@ -31,10 +31,30 @@ def test_ci_only_runs_for_pull_requests_to_dev():
     assert any(step.get("run") == "python -m pytest" for step in steps)
 
 
-def test_deployment_only_runs_on_main():
+def test_release_is_verified_before_main_deployment():
     config = read_yaml(".github/workflows/deploy-azure.yml")
-    assert set(config["on"]) == {"push"}
+    assert set(config["on"]) == {"push", "workflow_dispatch"}
     assert config["on"]["push"]["branches"] == ["main"]
+    verify = config["jobs"]["verify"]
+    assert verify["if"] == "github.ref == 'refs/heads/main'"
+    assert "AZURE_WEBAPP_NAME" not in verify["if"]
+    steps = verify["steps"]
+    commands = [step.get("run", "") for step in steps]
+    assert any("scripts/smoke_runtime.py dist/deploy.zip" in run for run in commands)
+    deploy = config["jobs"]["deploy"]
+    assert deploy["needs"] == "verify"
+    assert "github.ref == 'refs/heads/main'" in deploy["if"]
+    uploaded = next(
+        step["with"]["name"]
+        for step in steps
+        if step.get("uses", "").startswith("actions/upload-artifact@")
+    )
+    downloaded = next(
+        step["with"]["name"]
+        for step in deploy["steps"]
+        if step.get("uses", "").startswith("actions/download-artifact@")
+    )
+    assert uploaded == downloaded == "tagebbbuch-${{ github.sha }}"
 
 
 def test_template_covers_the_lb_requirement_structure():

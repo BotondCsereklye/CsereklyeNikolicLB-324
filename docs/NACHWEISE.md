@@ -1,5 +1,23 @@
 # Durchgeführte Arbeit und Nachweise
 
+## Aktualisierung vom 26. Oktober 2026
+
+Die folgenden älteren Abschnitte dokumentieren die Prüfungen vom 9. Oktober. Für den aktuellen Abschluss wurden [Issue #12](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/12) für Dokumentation und Teamaufteilung, [Issue #13](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/13) für die automatische Artefaktprüfung und [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) für den weiterhin offenen Azure-Nachweis angelegt. Die Umsetzung erfolgt auf `feature/12-raster-team-abschluss` aus `dev`.
+
+| Prüfung oder Änderung | Aktueller Nachweis |
+| --- | --- |
+| Projektteam | Botond Csereklye und Aleksandar Nikolic; bestätigte Zusammenarbeit und Abschlusszuständigkeiten in [TEAM.md](TEAM.md). Bisherige individuelle Beiträge von Aleksandar noch zu bestätigen. |
+| Dokumentationslücken | DevOps-Grundlagen, Begriffe, Werkzeugvergleich und begründete Entscheidung in [DEVOPS.md](DEVOPS.md); Zuordnung jedes Kompetenzbandes in [RASTER.md](RASTER.md). |
+| Lokale Gesamtsuite | 24 Tests erfolgreich; 97,62 % Statement-/Branch-Abdeckung von `app.py`; Black-Prüfung erfolgreich. |
+| Echter Artefakt-Integrationstest | ZIP separat entpackt, Gunicorn gestartet und Health-Commit, falsches Passwort, Login, Happiness am gespeicherten Eintrag, Escaping und Logout über HTTP geprüft; Prozess nach Prüfung beendet. |
+| Negative Abnahme | ZIP mit falschem Release-Commit wird zurückgewiesen. Absichtlich defekte Happiness-Implementierung im ZIP wird erkannt. Dadurch kann das Formular-Emoji keinen falschen Erfolg mehr erzeugen. |
+| Release-Pipeline | `verify` baut und prüft das ZIP ohne Cloud-Zugang. `deploy` benötigt den erfolgreichen Prüfjob und lädt genau dessen Artefakt. Fehlende Azure-Konfiguration erzeugt eine ausdrückliche Warnung; manuelle Wiederholung nur auf `main`. |
+| GitHub-Nachweis | Die tatsächlichen neuen dev-CI- und Release-Ergebnisse sind am zugehörigen PR und unter [Actions](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions) einsehbar; ein lokaler Erfolg ersetzt deren Status nicht. |
+| Sichtbarkeit | Am 26. Oktober live als privat geprüft; bleibt auf ausdrücklichen Benutzerwunsch privat. Die öffentliche Sichtbarkeit der LB ist bewusst aufgeschoben. |
+| Azure | Kein authentifizierter Zugang verfügbar; Repository-Variablen, Actions-Secrets und Environments waren bei der Prüfung leer. Echte App-URL, OIDC-Konfiguration und Live-Abnahme bleiben in Issue #14 offen. |
+
+Ein grüner Release-Prüfjob bei übersprungenem `deploy` ist ein geprüfter Build, keine Azure-Auslieferung. Die persönliche fachliche Gegenprüfung durch Aleksandar und eine Moodle-Abgabe werden nicht als durchgeführt angegeben.
+
 ## Ausgangslage
 
 Am 9. Oktober 2026 wurden die Modulaufträge in `M324_Aufgaben` und die konkrete `LB-324.docx` ausgewertet. Das dortige `tagebbbuch.zip` liefert den Ausgangscode. Die `.env` aus dem Archiv und die enthaltene verschachtelte Dublette wurden nicht übernommen. Alte Prüfungen oder private Projekte werden nicht verwendet.

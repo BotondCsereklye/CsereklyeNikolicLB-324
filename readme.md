@@ -1,12 +1,14 @@
 # CsereklyeBotondLB-324
 
-Leistungsbeurteilung M324 DevOps, Botond Csereklye. Grundlage: die offizielle Tagebbbuch-Vorlage aus `tagebbbuch.zip` und die fünf Aufgaben in `LB-324.docx`. Es wird kein privates Projekt übernommen.
+Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**. Grundlage: die offizielle Tagebbbuch-Vorlage aus `tagebbbuch.zip` und die fünf Aufgaben in `LB-324.docx`.
 
 Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324
 
-**GitHub-Stand bei der Schlussprüfung:** Das Repository ist aktuell privat. Die LB verlangt ein öffentliches Repository. Ein vorübergehend mit HTTP 403 abgewiesener Push der Schlussdokumentation auf `feature/7-abgabenachweise` war beim erneuten Versuch erfolgreich. Die Funktionsänderungen, Dokumentation und erfolgreichen CI-Läufe sind auf GitHub vorhanden.
+**Stand vom 26. Oktober 2026:** Das Repository bleibt auf ausdrücklichen Wunsch privat. Die öffentliche Sichtbarkeit gemäss LB ist bewusst aufgeschoben. Die Funktionsänderungen und bisherigen erfolgreichen CI-Läufe sind auf GitHub vorhanden.
 
 **Azure-URL: noch offen.** Es ist noch keine laufende Azure-Auslieferung nachgewiesen. Aufgabe 4 ist deshalb nicht vollständig erfüllt.
+
+[DevOps-Grundlagen und Werkzeugvergleich](docs/DEVOPS.md), [Bewertungsraster und Nachweiszuordnung](docs/RASTER.md) sowie [Projektteam und Aufgabenaufteilung](docs/TEAM.md) ergänzen die technischen Unterlagen. Historische Einzelbeiträge werden nur nach Bestätigung zugeordnet.
 
 ## Lokal starten
 
@@ -68,6 +70,8 @@ Hooks laufen lokal und können umgangen werden. Deshalb ergänzt serverseitige C
 
 `.github/workflows/ci.yml` reagiert ausschliesslich auf Pull Requests mit Ziel `dev`. Der einzige Job `pytest` installiert die Testumgebung und führt `python -m pytest` aus. Keine Push-/Issue-/Tag-Ereignisse, keine Auslieferung und kein zusätzlicher Job werden in dieser CI gestartet.
 
+Die Suite umfasst auch `tests/test_runtime.py`: Das Laufzeit-ZIP wird isoliert entpackt und mit einem echten Gunicorn-Prozess über HTTP geprüft. Ein falscher Release-Commit und eine defekte Stimmung am gespeicherten Eintrag werden durch eigene Negativtests erkannt.
+
 ```text
 Issue → Feature-Branch aus dev → Commit → Push → PR nach dev
       → erfolgreicher pytest-Check → Merge nach dev
@@ -82,7 +86,7 @@ Die vollständige Anleitung steht in [docs/AZURE.md](docs/AZURE.md). Der separat
 
 Im Azure App Service unter Einstellungen → Umgebungsvariablen/App settings `PASSWORD` anlegen. Für die LB ist der Wert der GitHub-Benutzername **BotondCsereklye**. Zusätzlich einen zufälligen, stabilen `SECRET_KEY` setzen. Änderungen speichern und den App-Neustart abwarten. Die Anwendung liest die Azure-Umgebungsvariablen; die lokale `.env` wird nicht hochgeladen. Den Erfolg durch Login auf der echten Azure-URL prüfen.
 
-GitHub erhält die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Variable `AZURE_WEBAPP_NAME`. `PASSWORD` und `SECRET_KEY` gehören in Azure, niemals in den Quellcode. Solange `AZURE_WEBAPP_NAME` fehlt, ist der Deployment-Job sichtbar übersprungen; das gilt nicht als erfolgreiche Auslieferung.
+GitHub erhält die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. `PASSWORD` und `SECRET_KEY` gehören in Azure, niemals in den Quellcode. Der Release-Job prüft Tests und genau das gebaute ZIP unabhängig von der Azure-Konfiguration. Solange `AZURE_WEBAPP_NAME` fehlt, wird nur der abhängige Deployment-Job übersprungen und eine Warnung ausgegeben; das gilt nicht als erfolgreiche Auslieferung. Nach der Einrichtung kann der Workflow auf `main` auch manuell gestartet werden.
 
 ## Aufgabe 5 Happiness über GitHub Flow
 
@@ -90,11 +94,13 @@ Eine eigene Issue und ein aus `dev` erstellter Feature-Branch dokumentieren die 
 
 [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde über `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach erfolgreicher GitHub-CI in `dev` umgesetzt. Der Feature-Branch bleibt erhalten. Der Funktionsstand 0.2.0 liegt inzwischen auf `dev` und durch [PR #8](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/8) auch auf `main`; eine erfolgreiche Azure-Auslieferung steht weiterhin aus.
 
-Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen in [docs/NACHWEISE.md](docs/NACHWEISE.md). 21 lokale Tests, die echte dev-CI und Browserprüfungen auf Desktop/Mobilansicht sind erfolgreich. Es wird kein fremdes Review behauptet.
+Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen mit ihrem jeweiligen Prüfdatum in [docs/NACHWEISE.md](docs/NACHWEISE.md). Die bisherigen Browserprüfungen auf Desktop/Mobilansicht und die neue HTTP-Artefaktprüfung sind getrennte Nachweise. Es wird kein fremdes Review behauptet.
 
 ## Artefakte und Abgabe
 
 `python scripts/package_release.py` erstellt `dist/deploy.zip` und dessen SHA-256. Das ZIP enthält nur App, Runtime-Abhängigkeiten, Templates, CSS und Versionsdatei; weder `.env` noch `.venv`, Tests oder Unterrichtsdateien.
+
+Den tatsächlichen Release-Commit mit `git rev-parse HEAD` ermitteln und dann `python scripts/smoke_runtime.py dist/deploy.zip --expected-commit <Commit-ID>` ausführen. Der Befehl prüft Login, Eintrag, Stimmung, Escaping, Logout und Release-ID und beendet den Testprozess anschliessend. Gunicorn und diese Prüfung benötigen macOS oder Linux; die CI verwendet Linux.
 
 Moodle erhält die Repository-URL und `CsereklyeBotondLB-324.zip` mit genau einem gleichnamigen Ordner. Vor dem Upload [docs/ABGABECHECK.md](docs/ABGABECHECK.md) selbst prüfen. Azure, Moodle-Upload und die verlangte Löschung nach tatsächlichem Abschluss werden nicht fälschlich als erledigt angegeben.
 

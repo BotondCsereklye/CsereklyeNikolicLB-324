@@ -4,7 +4,7 @@ from app import entries
 def test_happiness_is_displayed(client):
     client.post("/add_entry", data={"content": "Ein guter Tag", "happiness": "😃"})
     response = client.get("/")
-    assert "😃" in response.get_data(as_text=True)
+    assert '<span aria-label="Stimmung">😃</span>' in response.get_data(as_text=True)
     assert "Ein guter Tag" in response.get_data(as_text=True)
 
 
