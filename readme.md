@@ -5,9 +5,9 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 ## Stand und Orientierung
 
 - `dev` enthält den geprüften Entwicklungsstand.
-- `main` enthält den aktuellen Abgabestand. Der Azure-Deployment-Job ist bis zur Freigabe gesperrt.
+- `main` enthält den Release-Stand und wird nach erfolgreicher Prüfung automatisch auf Azure ausgeliefert.
 - `feature/5-happiness` bleibt als vorgeschriebener Nachweis der Funktionsänderung erhalten.
-- Azure-URL und erfolgreiche Cloud-Auslieferung stehen noch aus: [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
+- Die [Live-App auf Azure](https://csereklyebotond-lb324.azurewebsites.net) ist ausgeliefert und technisch abgenommen; die Nachweise stehen in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
 - Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
 
 Die ausführliche Dokumentation zu A1–E1 wird separat als `Dokumentation_M324.docx` abgegeben.
@@ -83,17 +83,27 @@ python -m pytest --cov=app --cov-report=term-missing
 
 `.github/workflows/ci.yml` startet ausschliesslich bei Pull Requests nach `dev` und führt pytest aus. Die Suite prüft auch das gebaute ZIP: Gunicorn startet es separat, anschliessend werden Login, Happiness und Logout über HTTP geprüft. Negativtests erkennen falsche Commit-Metadaten und eine defekte Stimmung.
 
-Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Geprüfte Änderungen werden anschliessend über einen PR von `dev` nach `main` übernommen. Die Auslieferung bleibt bis zur Freigabe pausiert.
+Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Geprüfte Änderungen werden anschliessend über einen PR von `dev` nach `main` übernommen und automatisch auf Azure ausgeliefert.
 
 ## Aufgabe 4 Azure
 
-**Pausiert bis zur Freigabe:** Der Deployment-Job ist im Workflow durch `&& false` gesperrt. Tests und Artefaktbau dürfen auf main laufen. Noch offen sind laufende App, URL und erfolgreicher Deployment-Nachweis.
+Die App läuft unter **https://csereklyebotond-lb324.azurewebsites.net** auf dem kostenlosen **F1-Plan in West Europe**, mit Linux und Python 3.12. Die Freigabe ist erteilt und die Workflow-Sperre entfernt. Der [Deployment-Lauf vom 2. November 2026](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41508690939) bestätigt Tests und Auslieferung für Commit `fd4623a`.
+
+Der automatische Live-Test bestätigte die vollständige Commit-ID auf `/health`, die Ablehnung eines falschen Passworts, den Login, das Speichern und erneute Laden aller drei Happiness-Werte sowie Logout und gesperrten Schreibzugriff nach dem Abmelden.
 
 Der Workflow `deploy-azure.yml` startet bei Pushes nach `main` und zusätzlich manuell. Seine Jobs laufen nur auf `main`. Zuerst werden Tests und das Laufzeit-ZIP geprüft. Der Deployment-Job übernimmt dasselbe Artefakt, liefert es über OIDC aus und prüft den Release-Commit auf `/health`.
 
 In Azure App settings werden `PASSWORD`, ein stabiler zufälliger `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT=true` gesetzt. Für die LB entspricht `PASSWORD` dem GitHub-Benutzernamen **BotondCsereklye**. Speichern, Neustart abwarten und den Login auf der Azure-URL prüfen. Die lokale `.env` wird nicht hochgeladen.
 
-GitHub benötigt die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. Ohne diese Variable wird der Deployment-Job übersprungen. Die ausführliche Erklärung steht im separat abgegebenen Word-Dokument.
+Die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` und `AZURE_SUBSCRIPTION_ID` liegen im GitHub-Environment `production`. Die Repository-Variable `AZURE_WEBAPP_NAME` enthält `csereklyebotond-lb324`. Die Azure-Identität besitzt die Rolle `Website Contributor` nur für diese App. Das Environment erlaubt Auslieferungen von `main`.
+
+Der Azure-Startbefehl verwendet einen Worker, damit Einträge im Arbeitsspeicher zuverlässig gelesen werden:
+
+```bash
+gunicorn --workers 1 --bind 0.0.0.0:8000 --timeout 600 --forwarded-allow-ips='*' app:app
+```
+
+F1 besitzt begrenzte [Kontingente](https://learn.microsoft.com/en-us/azure/app-service/web-sites-monitor). Bei `QuotaExceeded` und HTTP 403 die Plan-Kontingente prüfen und den angezeigten Reset abwarten. Häufige Konfigurationsänderungen und Neustarts vermeiden. Abschnitt E1 in `Dokumentation_M324.docx` beschreibt den geprüften Ablauf.
 
 ## Aufgabe 5 Happiness
 
