@@ -1,50 +1,28 @@
-# Nachweise
-
-Die technische Gegenprüfung ist im [Prüfbericht](ABNAHME_ALEKSANDAR.md) dokumentiert. Die folgende Übersicht verbindet Anforderungen mit Umsetzung und automatisierten Prüfungen.
+# Projektnachweise
 
 ## Anforderungen und Umsetzung
 
-| Arbeit | Issue | Umsetzung und Nachweis |
-| --- | --- | --- |
-| Ausgangsvorlage | #1 | Commit `51af91a` |
-| Issue-Vorlage, Labels, Hooks und CI | #2 | [PR #3](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/3), Merge nach dev `40aacaa`; [CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37933992918) erfolgreich |
-| Happiness | #5 | [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6), Merge `bd5d937`; [CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37935212233) erfolgreich |
-| Frühere Abgabeunterlagen | #7 | PRs #9 bis #11; [dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37936653040) erfolgreich |
-| Grundlagen und Teamaufteilung | #12 | [PR #15](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/15) |
-| HTTP-Prüfung des Laufzeit-ZIPs | #13 | PR #15, `tests/test_runtime.py` und `scripts/smoke_runtime.py` |
-| Gegenprüfung und Abschlussunterlagen | #17 | [PR #18](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/18) |
-| Echte Azure-Auslieferung | #14 | Offen |
+| Gegenstand | Anforderung | Umsetzung | Automatische Prüfung |
+| --- | --- | --- | --- |
+| Anforderungsverwaltung, Hooks und CI | [Issue #2](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/2) | [PR #3](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/3) nach dev | [Erfolgreicher pytest-Lauf](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37933992918) |
+| Happiness | [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) | [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach dev | [Erfolgreiche Happiness-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37935212233) |
+| HTTP-Prüfung des Laufzeit-Artefakts | [Issue #13](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/13) | [PR #15](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/15), tests/test_runtime.py und scripts/smoke_runtime.py | [Erfolgreiche dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40295594572) |
+| Automatische Azure-Auslieferung | [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) | Workflow vorbereitet und derzeit gesperrt | Live-Nachweis ausstehend |
 
-## Happiness über GitHub Flow
+## GitHub Flow am Beispiel Happiness
 
-Die Anforderung steht in [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5). Der Branch `feature/5-happiness` stammt aus dem damaligen dev-Stand `40aacaa`. Test-Commit `536fb6a` liegt vor Implementierungscommit `e1fa937`. PR #6 wurde nach erfolgreicher CI in dev übernommen. Der Branch bleibt gemäss LB erhalten.
+Issue #5 beschreibt den Anforderungssatz und das Abnahmekriterium. Der Feature-Branch wurde aus `dev` angelegt. Test-Commit `536fb6a` liegt vor Implementierungscommit `e1fa937`. PR #6 hat die GitHub-CI bestanden und wurde mit `bd5d937` nach dev gemergt. Die Funktion wurde anschliessend nach main übernommen.
 
-Das damalige lokale Protokoll beschreibt vier zunächst fehlgeschlagene Happiness-Tests und einen durch pytest blockierten Push. Nach der Umsetzung bestanden 21 Tests. Diese lokalen Hook-Ereignisse sind historische Angaben; die verlinkte GitHub-CI belegt den erfolgreichen integrierten Stand.
+Die Nachweiskette lautet damit: **Issue → Feature-Branch → Test → Implementierung → geprüfter PR → Integration**. Der Happiness-Branch wird für die LB erhalten.
 
-## Automatisierte Prüfung und Artefakt
+## Geprüftes Release-Artefakt
 
-Im [Release-Lauf vom 26. Oktober](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40295820919) wurden für Commit `a30dbaa95720acd087e9f71776de18ff2d8b03df` folgende Schritte erfolgreich ausgeführt:
+Der [Main-Lauf vom 2. November 2026](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464774961) bestätigt:
 
-- 24 Tests;
-- Laufzeit-ZIP mit Version, Commit-ID und Dateihashes;
-- Start genau dieses ZIPs mit Gunicorn;
+- 24 erfolgreiche Tests;
+- Erstellung von deploy.zip mit Versions- und Commit-Metadaten;
+- Start des entpackten ZIPs mit Gunicorn;
 - HTTP-Prüfung von Health-Commit, falschem Passwort, Login, Happiness, Escaping und Logout;
-- Upload als `tagebbbuch-a30dbaa95720acd087e9f71776de18ff2d8b03df`.
+- Aufbewahrung als Actions-Artefakt.
 
-Der Job „Auf Azure ausliefern“ wurde wegen fehlender `AZURE_WEBAPP_NAME` übersprungen.
-
-[CI-Lauf 40364160076](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40364160076) zu PR #18 bestätigt weitere 24 bestandene Tests. Beide Protokolle wurden am 2. November 2026 erneut gelesen. Spätere Dokumentationsänderungen werden durch den jeweils aktuellen Check an PR #18 geprüft.
-
-## Frühere lokale Prüfungen
-
-Der Bericht vom 9. Oktober nennt erfolgreiche Desktop-/Mobilansicht-Prüfungen, ausgeführte Hooks und ein separat gestartetes Laufzeit-ZIP. Der Bericht vom 26. Oktober nennt 97,62 % kombinierte Statement-/Branch-Abdeckung von app.py. Diese Ergebnisse gehören zu den damaligen Ständen. Die historischen Detailfassungen stehen in der Git-Historie dieser Datei.
-
-## Noch offen
-
-Azure-URL, erfolgreiche Auslieferung und fachliche Live-Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) ergänzt. Repository-Sichtbarkeit, endgültiges Abgabe-ZIP und Moodle-Upload stehen in [ABGABECHECK.md](ABGABECHECK.md).
-
-## Abschluss vom 2. November 2026
-
-PR #18 wurde nach erfolgreicher [dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41463752367) integriert und über [PR #19](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/19) nach main übernommen. Die [Main-Prüfung](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034617) war erfolgreich. Der Azure-Job ist durch eine feste Workflow-Bedingung gesperrt.
-
-Der [Bereinigungslauf](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034661) hat die vollständige Integration der vier abgeschlossenen Feature-Branches geprüft und diese entfernt. Der vorgeschriebene Happiness-Branch bleibt erhalten. Der vorübergehende Bereinigungsworkflow wird mit der abschliessenden Dokumentationsänderung entfernt.
+Der Job „Auf Azure ausliefern“ war gesperrt und wurde übersprungen. Eine laufende Azure-URL und die fachliche Live-Abnahme stehen noch aus. Details zur Prüfung: [TESTS.md](TESTS.md).
