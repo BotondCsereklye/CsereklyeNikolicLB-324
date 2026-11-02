@@ -42,3 +42,9 @@ Der Bericht vom 9. Oktober nennt erfolgreiche Desktop-/Mobilansicht-Prüfungen, 
 ## Noch offen
 
 Azure-URL, erfolgreiche Auslieferung und fachliche Live-Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) ergänzt. Repository-Sichtbarkeit, endgültiges Abgabe-ZIP und Moodle-Upload stehen in [ABGABECHECK.md](ABGABECHECK.md).
+
+## Abschluss vom 2. November 2026
+
+PR #18 wurde nach erfolgreicher [dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41463752367) integriert und über [PR #19](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/19) nach main übernommen. Die [Main-Prüfung](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034617) war erfolgreich. Der Azure-Job ist durch eine feste Workflow-Bedingung gesperrt.
+
+Der [Bereinigungslauf](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034661) hat die vollständige Integration der vier abgeschlossenen Feature-Branches geprüft und diese entfernt. Der vorgeschriebene Happiness-Branch bleibt erhalten. Der vorübergehende Bereinigungsworkflow wird mit der abschliessenden Dokumentationsänderung entfernt.
