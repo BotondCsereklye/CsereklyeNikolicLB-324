@@ -10,12 +10,7 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 - Azure-URL und erfolgreiche Cloud-Auslieferung stehen noch aus: [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
 - Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
 
-| Unterlage | Inhalt |
-| --- | --- |
-| [DEVOPS](docs/DEVOPS.md) | Grundlagen, Werkzeugvergleich und Entscheidungen |
-| [RASTER](docs/RASTER.md) | Zuordnung der fünf Kompetenzbänder |
-| [NACHWEISE](docs/NACHWEISE.md) | Issues, PRs, Tests und Artefakte |
-| [TESTS](docs/TESTS.md) | Testfälle und vollständiger Integrationstest |
+Die ausführliche Dokumentation zu A1–E1 wird separat als `Dokumentation_M324.docx` abgegeben.
 
 ## Lokal starten
 
@@ -98,7 +93,7 @@ Der Workflow `deploy-azure.yml` startet bei Pushes nach `main` und zusätzlich m
 
 In Azure App settings werden `PASSWORD`, ein stabiler zufälliger `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT=true` gesetzt. Für die LB entspricht `PASSWORD` dem GitHub-Benutzernamen **BotondCsereklye**. Speichern, Neustart abwarten und den Login auf der Azure-URL prüfen. Die lokale `.env` wird nicht hochgeladen.
 
-GitHub benötigt die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. Ohne diese Variable wird der Deployment-Job übersprungen. Die Einrichtung ist in [AZURE.md](docs/AZURE.md) beschrieben.
+GitHub benötigt die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. Ohne diese Variable wird der Deployment-Job übersprungen. Die ausführliche Erklärung steht im separat abgegebenen Word-Dokument.
 
 ## Aufgabe 5 Happiness
 
