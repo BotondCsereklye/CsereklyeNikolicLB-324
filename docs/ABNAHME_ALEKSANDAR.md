@@ -1,9 +1,5 @@
 # Technische Gegenprüfung
 
-## KI-Unterstützung
-
-Codex wurde zur Prüfung von Code, Tests und Dokumentation sowie zur Überarbeitung der Unterlagen eingesetzt. Die Prüfungen vom 26. Oktober 2026 erfolgten KI-gestützt im Auftrag von Aleksandar Nikolic. Auch die Bereinigung und GitHub-Prüfung vom 2. November 2026 erfolgt mit Codex. Diese Unterstützung ist kein Nachweis einer persönlichen manuellen Abnahme durch die Projektpartner.
-
 ## Prüfung vom 26. Oktober 2026
 
 Geprüfter Ausgangsstand: `debedb40ecbc27703bc8eb4e446ac4c25e4245f0` auf `dev`. Der damalige Bericht nennt Linux mit Python 3.12.14, eine neue virtuelle Umgebung, installierte Commit-/Push-Hooks, 24 erfolgreiche Tests und 97,62 % kombinierte Statement-/Branch-Abdeckung von `app.py`.

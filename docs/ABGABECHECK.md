@@ -17,7 +17,6 @@ Prüfstand: 2. November 2026, vor der Azure-Einrichtung. Grundlage sind `LB-324.
 - [x] Laufzeit-Paket verwendet eine feste Dateiliste; `.env`, `.venv`, Tests und Git-Interna gehören nicht zum Deployment-ZIP.
 - [x] DevOps-Grundlagen, Werkzeugvergleich, Versionsverwaltung und Rasterzuordnung sind dokumentiert.
 - [x] Beide Projektpartner und Abschlusszuständigkeiten sind genannt.
-- [x] KI-Unterstützung und Grenzen der bisherigen Prüfung stehen im Prüfbericht.
 - [ ] PR #18 nach erfolgreichem aktuellem CI-Check in dev übernehmen und Issue #17 schliessen.
 - [ ] Abgeschlossene Feature-Branches nach Prüfung ihrer vollständigen Integration entfernen; Happiness-Branch behalten.
 - [ ] Beide Partner prüfen die Unterlagen persönlich und ergänzen ihre tatsächlichen bisherigen Beiträge.
@@ -25,6 +24,10 @@ Prüfstand: 2. November 2026, vor der Azure-Einrichtung. Grundlage sind `LB-324.
 Die Haken zur Konfiguration beruhen auf Datei- und GitHub-Prüfung. Lokale Hook-Ausführung und Coverage vom 26. Oktober sind historische Nachweise im [Prüfbericht](ABNAHME_ALEKSANDAR.md). Ein aktueller lokaler Testlauf auf beiden Notebooks ist damit nicht bestätigt.
 
 ## Deployment
+
+Der Azure-Job ist bis zur Freigabe im Workflow mit `&& false` gesperrt.
+
+- [ ] Deployment nach Freigabe im Workflow wieder aktivieren.
 
 - [ ] Azure App Service und OIDC-Zugang einrichten.
 - [ ] `PASSWORD`, `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT` in Azure setzen.

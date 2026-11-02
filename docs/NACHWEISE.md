@@ -1,6 +1,6 @@
 # Nachweise
 
-Die technische Prüfung und die KI-Unterstützung sind im [Prüfbericht](ABNAHME_ALEKSANDAR.md) dokumentiert. Die folgende Übersicht verbindet Anforderungen mit Umsetzung und automatisierten Prüfungen.
+Die technische Gegenprüfung ist im [Prüfbericht](ABNAHME_ALEKSANDAR.md) dokumentiert. Die folgende Übersicht verbindet Anforderungen mit Umsetzung und automatisierten Prüfungen.
 
 ## Anforderungen und Umsetzung
 

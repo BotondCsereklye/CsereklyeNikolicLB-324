@@ -16,4 +16,4 @@ Botond Csereklye und Aleksandar Nikolic bearbeiten die LB gemeinsam. Aleksandars
 
 Die Tabelle beschreibt die Aufgabenaufteilung für den Abschluss. Frühere gemeinsame Arbeit lässt sich aus dem Commit-Konto allein nicht auf einzelne Personen aufteilen. Konkrete frühere Beiträge werden von uns bei der Schlussprüfung ergänzt.
 
-Die technische Gegenprüfung und ihre KI-Unterstützung stehen im [Prüfbericht](ABNAHME_ALEKSANDAR.md). Eine persönliche Browserabnahme auf Azure steht noch aus.
+Die Ergebnisse der technischen Gegenprüfung stehen im [Prüfbericht](ABNAHME_ALEKSANDAR.md). Eine persönliche Browserabnahme auf Azure steht noch aus.

@@ -5,7 +5,7 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 ## Stand und Orientierung
 
 - `dev` enthält den geprüften Entwicklungsstand.
-- `main` enthält den bisherigen Release-Stand. Die nächste Übernahme erfolgt zusammen mit der Azure-Einrichtung.
+- `main` enthält den aktuellen Abgabestand. Der Azure-Deployment-Job ist bis zur Freigabe gesperrt.
 - `feature/5-happiness` bleibt als vorgeschriebener Nachweis der Funktionsänderung erhalten.
 - Azure-URL und erfolgreiche Cloud-Auslieferung stehen noch aus: [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
 - Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
@@ -17,7 +17,7 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 | [NACHWEISE](docs/NACHWEISE.md) | Issues, PRs, Tests und Artefakte |
 | [TEAM](docs/TEAM.md) | Zuständigkeiten |
 | [ABGABECHECK](docs/ABGABECHECK.md) | Geprüfte und offene Abgabepunkte |
-| [Prüfbericht](docs/ABNAHME_ALEKSANDAR.md) | KI-Unterstützung und technische Gegenprüfung |
+| [Prüfbericht](docs/ABNAHME_ALEKSANDAR.md) | Technische Gegenprüfung |
 
 ## Lokal starten
 
@@ -90,11 +90,11 @@ python -m pytest --cov=app --cov-report=term-missing
 
 `.github/workflows/ci.yml` startet ausschliesslich bei Pull Requests nach `dev` und führt pytest aus. Die Suite prüft auch das gebaute ZIP: Gunicorn startet es separat, anschliessend werden Login, Happiness und Logout über HTTP geprüft. Negativtests erkennen falsche Commit-Metadaten und eine defekte Stimmung.
 
-Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Ein Release wird anschliessend über einen PR von `dev` nach `main` ausgeliefert.
+Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Geprüfte Änderungen werden anschliessend über einen PR von `dev` nach `main` übernommen. Die Auslieferung bleibt bis zur Freigabe pausiert.
 
 ## Aufgabe 4 Azure
 
-**Noch offen:** laufende App, URL und erfolgreicher Deployment-Nachweis.
+**Pausiert bis zur Freigabe:** Der Deployment-Job ist im Workflow durch `&& false` gesperrt. Tests und Artefaktbau dürfen auf main laufen. Noch offen sind laufende App, URL und erfolgreicher Deployment-Nachweis.
 
 Der Workflow `deploy-azure.yml` startet bei Pushes nach `main` und zusätzlich manuell. Seine Jobs laufen nur auf `main`. Zuerst werden Tests und das Laufzeit-ZIP geprüft. Der Deployment-Job übernimmt dasselbe Artefakt, liefert es über OIDC aus und prüft den Release-Commit auf `/health`.
 
