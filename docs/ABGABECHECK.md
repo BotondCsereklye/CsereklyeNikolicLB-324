@@ -17,11 +17,14 @@ Prüfstand: 2. November 2026, vor der Azure-Einrichtung. Grundlage sind `LB-324.
 - [x] Laufzeit-Paket verwendet eine feste Dateiliste; `.env`, `.venv`, Tests und Git-Interna gehören nicht zum Deployment-ZIP.
 - [x] DevOps-Grundlagen, Werkzeugvergleich, Versionsverwaltung und Rasterzuordnung sind dokumentiert.
 - [x] Beide Projektpartner und Abschlusszuständigkeiten sind genannt.
-- [ ] PR #18 nach erfolgreichem aktuellem CI-Check in dev übernehmen und Issue #17 schliessen.
-- [ ] Abgeschlossene Feature-Branches nach Prüfung ihrer vollständigen Integration entfernen; Happiness-Branch behalten.
+- [x] PR #18 nach erfolgreicher CI in dev integriert; geprüfter Stand über PR #19 nach main übernommen.
+- [x] Vier vollständig integrierte Feature-Branches entfernt; main, dev und feature/5-happiness bleiben erhalten.
+- [x] Einmaligen Bereinigungsworkflow nach erfolgreicher Ausführung aus dem Projekt entfernt.
 - [ ] Beide Partner prüfen die Unterlagen persönlich und ergänzen ihre tatsächlichen bisherigen Beiträge.
 
 Die Haken zur Konfiguration beruhen auf Datei- und GitHub-Prüfung. Lokale Hook-Ausführung und Coverage vom 26. Oktober sind historische Nachweise im [Prüfbericht](ABNAHME_ALEKSANDAR.md). Ein aktueller lokaler Testlauf auf beiden Notebooks ist damit nicht bestätigt.
+
+Ergebnisse vom 2. November: [dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41463752367), [Main-Prüfung](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034617) und [Branch-Bereinigung](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41464034661) erfolgreich. Der Azure-Job war gesperrt. Abschlussänderungen werden nochmals über dev-CI und Main-Prüfung kontrolliert.
 
 ## Deployment
 
