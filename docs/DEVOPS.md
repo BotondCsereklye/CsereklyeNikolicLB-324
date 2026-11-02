@@ -39,7 +39,7 @@ Für diese LB zählen die Verknüpfung mit Code und Tests, eine verständliche A
 
 Wir verwenden GitHub Issues als führende Aufgabenverwaltung. Anforderungen, PRs und Actions am selben Ort verkürzen die Nachweiskette. Markdown dokumentiert Entscheidungen und Prüfungen. Ein zusätzliches Trello-Board bringt für die vorliegende LB keinen ausreichenden Nutzen, um die doppelte Statuspflege zu rechtfertigen.
 
-Die Funktionsbeschreibungen stützen sich auf [GitHub: About issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) und [Atlassian: Add and customize cards and lists](https://support.atlassian.com/trello/docs/add-and-customize-cards-and-lists/). Die projektspezifische Eignungsbewertung ist unsere daraus abgeleitete Beurteilung. Es wurden keine zusätzlichen Dienste eingerichtet.
+Quellen zum Vergleich: [GitHub Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) und [Trello-Karten und Listen](https://support.atlassian.com/trello/docs/add-and-customize-cards-and-lists/).
 
 Trello bietet mit dem [GitHub Power-Up](https://support.atlassian.com/trello/docs/using-the-github-power-up/) eine Integration an. Die Entscheidung gegen ein zusätzliches Board beruht hier auf dem Einrichtungs- und Pflegeaufwand, nicht auf einer fehlenden GitHub-Anbindung. Das Power-Up wurde für diese Gegenprüfung anhand der Herstellerdokumentation geprüft und nicht eingerichtet.
 
@@ -57,9 +57,9 @@ Für LZ 3.1 unterscheiden wir die Versionsverwaltung von ihrer Hosting-Plattform
 | Mercurial | Ebenfalls verteilte Versionsverwaltung mit lokaler Historie und lokalen Commits | Technische Alternative; für den vorgegebenen GitHub-Ablauf nicht gewählt. |
 | Subversion (SVN) | Zentral; die gemeinsame Historie liegt auf dem Server, Commits werden dort gespeichert | Alternative für zentral organisierte Entwicklung; hier nicht verwendet. |
 
-GitHub hostet Git-Repositories und ergänzt Issues, Pull Requests und Actions. Es ist keine zusätzliche Versionsverwaltung. Quelle für zentrale und verteilte Systeme: [Pro Git: About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). Die Alternativen werden erklärt; eine praktische Nutzung von SVN oder Mercurial wird nicht behauptet. Der Ablauf mit `dev` als Integrationsast ist die in der LB verlangte Anpassung des GitHub Flow.
+GitHub hostet Git-Repositories und ergänzt Issues, Pull Requests und Actions. Es ist keine zusätzliche Versionsverwaltung. Quelle für zentrale und verteilte Systeme: [Pro Git: About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). Der Ablauf mit `dev` als Integrationsast ist die in der LB verlangte Anpassung des GitHub Flow.
 
-`deploy.zip` enthält nur freigegebene Laufzeitdateien und `release.json` mit Version, Commit und Dateihashes. Der Release-Job prüft genau dieses ZIP mit Gunicorn und HTTP und speichert es als Actions-Artefakt `tagebbbuch-<Commit-ID>` für 14 Tage. Der Azure-Job lädt dasselbe Artefakt desselben Laufs. Das Abgabe-ZIP enthält zusätzlich Tests und Dokumentation; das Git-Bundle sichert Branches und Historie. `.env`, `.venv` und Git-Interna gehören nicht ins Abgabe-ZIP.
+`deploy.zip` enthält nur freigegebene Laufzeitdateien und `release.json` mit Version, Commit und Dateihashes. Der Release-Job prüft genau dieses ZIP mit Gunicorn und HTTP und speichert es als Actions-Artefakt `tagebbbuch-<Commit-ID>` für 14 Tage. Der Azure-Job lädt dasselbe Artefakt desselben Laufs. Das endgültige Abgabe-ZIP enthält zusätzlich Tests und Dokumentation. Ein Git-Bundle kann bei Bedarf Branches und Historie zusätzlich sichern. `.env`, `.venv` und Git-Interna gehören nicht ins Abgabe-ZIP.
 
 ## Deployment und Betrieb
 
