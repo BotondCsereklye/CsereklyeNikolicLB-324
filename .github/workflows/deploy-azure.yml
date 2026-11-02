@@ -48,7 +48,8 @@ jobs:
   deploy:
     name: Auf Azure ausliefern
     needs: verify
-    if: github.ref == 'refs/heads/main' && vars.AZURE_WEBAPP_NAME != ''
+    # Deployment erst nach ausdrücklicher Freigabe aktivieren.
+    if: github.ref == 'refs/heads/main' && vars.AZURE_WEBAPP_NAME != '' && false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
