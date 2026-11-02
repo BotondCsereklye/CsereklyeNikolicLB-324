@@ -76,7 +76,7 @@ Die Nachweise wurden mit echten GitHub-Daten gegengeprüft:
 
 ## Veröffentlichung und offene Punkte
 
-Der eigene PR nach `dev` und sein tatsächliches CI-Ergebnis werden nach der Veröffentlichung ergänzt. Ein Merge ist nicht Teil dieser Abnahme.
+Die Änderungen wurden als Commit `75c852e1dfd36b473e27ccc85588e28b3172a593` unter Aleksandars verifizierter GitHub-Identität veröffentlicht. [PR #18](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/18) zielt auf `dev`. Sein erster [CI-Lauf 40363801565](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40363801565) hat den pytest-Job erfolgreich abgeschlossen. Dieser Nachtrag ergänzt den tatsächlich beobachteten Veröffentlichungsstand; der aktuelle CI-Status weiterer Dokumentationscommits steht am PR. Ein Merge ist nicht Teil dieser Abnahme, der Feature-Branch bleibt erhalten.
 
 Die Azure-Abnahme bleibt in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) offen: README und Issue enthalten noch keine reale App-URL oder Zugangsmöglichkeit. Sobald Botond bereitgestellt hat, sind auf dieser URL Login, alle Stimmungen, Logout und `/health` gegen den tatsächlichen Release-Commit zu prüfen. Die Azure-Konfiguration wird hier nicht übernommen.
 
