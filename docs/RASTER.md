@@ -1,21 +1,15 @@
-# Abgleich mit dem Bewertungsraster M324
+# Nachweise zum Bewertungsraster M324
 
-Grundlage: `M324_Bewertungsraster.xlsx`, Version 1.0, Blatt `Bewertungsraster`, Zeilen 8–12. Die Gewichtung beträgt 20/10/30/20/20 Prozent.
+Grundlage: `M324_Bewertungsraster.xlsx`, Version 1.0, Blatt Bewertungsraster, Zeilen 8–12.
 
-| Band | Gewicht | Vorhandene Nachweise | Noch erforderlich |
+| Kompetenzband | Gewicht | Erklärung und Anwendung | Praktischer Nachweis |
 | --- | --- | --- | --- |
-| A1 Anforderungen | 20 % | DevOps-Grundlagen und Begriffe in DEVOPS.md; Issue-Vorlage, Typ-Labels und Issue #5; Vergleich von GitHub Issues, Trello und Markdown mit begründeter Wahl | Begriffe und Entscheidung selbst erklären |
-| B1 Umgebung | 10 % | Python 3.12, virtuelle Umgebung, gepinnte Abhängigkeiten und Hook-Anleitung im README; Konfiguration für Black bei Commit und pytest bei Push | Einrichtung auf dem eigenen Notebook nachvollziehen |
-| C1 Sourcecode und Artefakte | 30 % | Git/Mercurial/SVN in DEVOPS.md; Issue #5, Feature-Branch, Commits und PR #6; Actions-Artefakt mit Commit und Hashes | Endgültiges Abgabe-ZIP aus dem finalen Stand prüfen |
-| D1 Integration | 20 % | Fachliche Happiness-Tests; automatische dev-CI; ZIP mit Gunicorn und HTTP; Negativtests für falschen Commit und defekte Happiness | Aktuellen CI-Check am Abschluss-PR prüfen |
-| E1 Deployment | 20 % | Erklärung, Azure-Anleitung, Workflow mit geprüftem Artefakt und HTTP-Prüfung der Release-ID | Echte Azure-Auslieferung, URL, Login und passender Release-Commit; Issue #14 |
+| A1 Anforderungen | 20 % | [DEVOPS](DEVOPS.md): Definition und Nutzen von DevOps, Anforderungsbegriffe, Traceability und Vergleich von GitHub Issues, Trello und Markdown | Issue-Vorlage, drei Typ-Labels und Issue #5 mit verknüpftem PR #6 |
+| B1 Entwicklungsumgebung | 10 % | [README](../readme.md): Einrichtung für Windows und Linux/macOS, Registrierung und Verwendung beider Hooks. [DEVOPS](DEVOPS.md): Alternativen, Werkzeugwahl und Erweiterung der Umgebung | Python 3.12, gepinnte Abhängigkeiten und .pre-commit-config.yaml mit Black bei Commit und pytest bei Push |
+| C1 Sourcecode und Artefakte | 30 % | [DEVOPS](DEVOPS.md): Git/Mercurial/SVN, Branch-Ablauf, Paketinhalt, Commit-Zuordnung und Artefaktaufbewahrung | [NACHWEISE](NACHWEISE.md): Happiness über GitHub Flow; geprüftes ZIP als Actions-Artefakt |
+| D1 Integration | 20 % | [TESTS](TESTS.md): Anforderung zu Testfall, automatische Ausführung und vollständiger HTTP-Integrationstest des ZIPs | dev-CI, drei Laufzeit-Tests einschliesslich Negativfällen sowie erfolgreicher Main-Prüfjob |
+| E1 Deployment | 20 % | [AZURE](AZURE.md): Funktionsweise und Konfiguration des automatisierten Deploymentprozesses | Workflow vorhanden; Deployment gesperrt, praktische Azure-Auslieferung und Live-Abnahme noch ausstehend |
 
-Für Advanced verlangen A1 den Werkzeugvergleich, B1 die selbständige Einrichtung, C1 die angewendete Artefaktverwaltung, D1 den vollständigen Integrationstest und E1 den umfassenden praktischen Deploymentprozess. Die Unterlagen und Automatisierungen bilden die Grundlage; die persönliche Erklärung und praktische Durchführung gehören zur Kompetenzbewertung.
+Für A1 ist der begründete Werkzeugvergleich dokumentiert. B1 verbindet die Einrichtung mit der selbständigen Anpassung von Hooks und Abhängigkeiten. C1 verknüpft Versions- und Artefaktverwaltung. D1 prüft das gebaute Artefakt mit echtem Webserver und HTTP. Für E1 ist die Vorbereitung dokumentiert; die praktische Durchführung folgt separat.
 
-Die konkreten Tests, PRs und Actions-Läufe sind in [NACHWEISE.md](NACHWEISE.md) verlinkt.
-
-## Konkrete LB-Aufgaben
-
-`LB-324.docx` enthält einen separaten Aufgabenraster mit 33 gewichteten Punkten. Aufgabe 5 zählt doppelt. Er bewertet Administration, Vorlage/Labels, Hooks/Anleitung, dev-CI, Azure und GitHub Flow. Diese Punkte werden getrennt von den fünf Kompetenzbändern betrachtet.
-
-Die [Abgabecheckliste](ABGABECHECK.md) folgt diesen konkreten Aufgaben. Die Lehrperson legt die endgültige Bewertung fest.
+Die konkrete LB enthält daneben einen Aufgabenraster mit 33 gewichteten Punkten. Dieser wird getrennt von den fünf Kompetenzbändern betrachtet.
