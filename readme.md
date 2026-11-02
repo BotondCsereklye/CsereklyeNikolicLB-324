@@ -89,13 +89,13 @@ Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev`
 
 ## Aufgabe 4 Azure
 
-Die App läuft unter **https://csereklyebotond-lb324.azurewebsites.net** auf dem kostenlosen **F1-Plan in West Europe**, mit Linux und Python 3.12. Die Freigabe ist erteilt und die Workflow-Sperre entfernt. Der [Deployment-Lauf vom 2. November 2026](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41508690939) bestätigt Tests und Auslieferung für Commit `fd4623a`.
+Die App läuft unter **https://csereklyebotond-lb324.azurewebsites.net** auf dem kostenlosen **F1-Plan in West Europe**, mit Linux und Python 3.12. Die Freigabe ist erteilt und die Workflow-Sperre entfernt. Der [Referenzlauf vom 2. November 2026](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/41511325950) bestätigt 24 Tests und die Auslieferung für Commit `494e23c`. Spätere Releases sind in den [Deployment-Läufen](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/workflows/deploy-azure.yml) nachgewiesen.
 
-Der automatische Live-Test bestätigte die vollständige Commit-ID auf `/health`, die Ablehnung eines falschen Passworts, den Login, das Speichern und erneute Laden aller drei Happiness-Werte sowie Logout und gesperrten Schreibzugriff nach dem Abmelden.
+Die automatische Prüfung nach jedem Deployment kontrolliert `/health` und die vollständige Commit-ID. Ein gesonderter Live-Funktionstest bestätigte die Ablehnung eines falschen Passworts, den Login, das Speichern und erneute Laden aller drei Happiness-Werte sowie Logout und gesperrten Schreibzugriff nach dem Abmelden; dieser Nachweis steht in Issue #14.
 
 Der Workflow `deploy-azure.yml` startet bei Pushes nach `main` und zusätzlich manuell. Seine Jobs laufen nur auf `main`. Zuerst werden Tests und das Laufzeit-ZIP geprüft. Der Deployment-Job übernimmt dasselbe Artefakt, liefert es über OIDC aus und prüft den Release-Commit auf `/health`.
 
-In Azure App settings werden `PASSWORD`, ein stabiler zufälliger `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT=true` gesetzt. Für die LB entspricht `PASSWORD` dem GitHub-Benutzernamen **BotondCsereklye**. Speichern, Neustart abwarten und den Login auf der Azure-URL prüfen. Die lokale `.env` wird nicht hochgeladen.
+Im Azure-Portal den App Service öffnen und unter **Settings → Environment variables → App settings** die Werte `PASSWORD`, einen stabilen zufälligen `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT=true` hinzufügen. Für die LB entspricht `PASSWORD` dem GitHub-Benutzernamen **BotondCsereklye**. Speichern, Neustart abwarten und den Login auf der Azure-URL prüfen. Die lokale `.env` wird nicht hochgeladen.
 
 Die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` und `AZURE_SUBSCRIPTION_ID` liegen im GitHub-Environment `production`. Die Repository-Variable `AZURE_WEBAPP_NAME` enthält `csereklyebotond-lb324`. Die Azure-Identität besitzt die Rolle `Website Contributor` nur für diese App. Das Environment erlaubt Auslieferungen von `main`.
 
