@@ -10,15 +10,15 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 - Die [Live-App auf Azure](https://csereklyebotond-lb324.azurewebsites.net) ist ausgeliefert und technisch abgenommen; die Nachweise stehen in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
 - Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
 
-Die ausführliche Dokumentation zu A1–E1 steht in [Dokumentation_M324.docx](Dokumentation_M324.docx).
+Die ausführliche Dokumentation zu A1–E1 steht in [CsereklyeBotondLB-324.docx](CsereklyeBotondLB-324.docx).
 
 ## Lokal starten
 
 Voraussetzungen: Git, Python 3.12 und GitHub-Zugriff auf dieses private Repository. Beim Klonen muss Git mit einem berechtigten Konto authentifiziert sein. Zuerst das Repository klonen und in den Entwicklungsast wechseln:
 
 ```bash
-git clone https://github.com/BotondCsereklye/CsereklyeBotondLB-324.git
-cd CsereklyeBotondLB-324
+git clone https://github.com/BotondCsereklye/CsereklyeNikolicLB-324.git
+cd CsereklyeNikolicLB-324
 git switch dev
 ```
 
@@ -105,7 +105,7 @@ Der Azure-Startbefehl verwendet einen Worker, damit Einträge im Arbeitsspeicher
 gunicorn --workers 1 --bind 0.0.0.0:8000 --timeout 600 --forwarded-allow-ips='*' app:app
 ```
 
-F1 besitzt begrenzte [Kontingente](https://learn.microsoft.com/en-us/azure/app-service/web-sites-monitor). Bei `QuotaExceeded` und HTTP 403 die Plan-Kontingente prüfen und den angezeigten Reset abwarten. Häufige Konfigurationsänderungen und Neustarts vermeiden. Abschnitt E1 in `Dokumentation_M324.docx` beschreibt den geprüften Ablauf.
+F1 besitzt begrenzte [Kontingente](https://learn.microsoft.com/en-us/azure/app-service/web-sites-monitor). Bei `QuotaExceeded` und HTTP 403 die Plan-Kontingente prüfen und den angezeigten Reset abwarten. Häufige Konfigurationsänderungen und Neustarts vermeiden. Abschnitt E1 in `CsereklyeBotondLB-324.docx` beschreibt den geprüften Ablauf.
 
 ## Aufgabe 5 Happiness
 
