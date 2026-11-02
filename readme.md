@@ -1,6 +1,6 @@
 # CsereklyeBotondLB-324
 
-Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**. Ausgangspunkt ist die Tagebbbuch-Vorlage aus dem Modul. Die Aufgaben stehen in `LB-324.docx`.
+Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**. Ausgangspunkt ist die Tagebbbuch-Vorlage aus dem Modul. Die Aufgaben stehen in der separat bereitgestellten Modulunterlage `LB-324.docx`.
 
 ## Stand und Orientierung
 
@@ -10,11 +10,11 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 - Die [Live-App auf Azure](https://csereklyebotond-lb324.azurewebsites.net) ist ausgeliefert und technisch abgenommen; die Nachweise stehen in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
 - Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
 
-Die ausführliche Dokumentation zu A1–E1 wird separat als `Dokumentation_M324.docx` abgegeben.
+Die ausführliche Dokumentation zu A1–E1 steht in [Dokumentation_M324.docx](Dokumentation_M324.docx).
 
 ## Lokal starten
 
-Voraussetzungen: Git und Python 3.12. Zuerst das Repository klonen und in den Entwicklungsast wechseln:
+Voraussetzungen: Git, Python 3.12 und GitHub-Zugriff auf dieses private Repository. Beim Klonen muss Git mit einem berechtigten Konto authentifiziert sein. Zuerst das Repository klonen und in den Entwicklungsast wechseln:
 
 ```bash
 git clone https://github.com/BotondCsereklye/CsereklyeBotondLB-324.git
@@ -35,7 +35,7 @@ Windows/PowerShell:
 
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 ```
@@ -83,6 +83,8 @@ python -m pytest --cov=app --cov-report=term-missing
 
 `.github/workflows/ci.yml` startet ausschliesslich bei Pull Requests nach `dev` und führt pytest aus. Die Suite prüft auch das gebaute ZIP: Gunicorn startet es separat, anschliessend werden Login, Happiness und Logout über HTTP geprüft. Negativtests erkennen falsche Commit-Metadaten und eine defekte Stimmung.
 
+Unter Windows werden die drei Gunicorn-Laufzeittests übersprungen. Die vollständige Suite läuft auf Linux/macOS und in der CI unter Ubuntu.
+
 Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Geprüfte Änderungen werden anschliessend über einen PR von `dev` nach `main` übernommen und automatisch auf Azure ausgeliefert.
 
 ## Aufgabe 4 Azure
@@ -118,10 +120,10 @@ Der Happiness-Branch wird gemäss LB nicht gelöscht.
 Auf Linux/macOS lässt sich das ZIP mit folgendem Befehl prüfen:
 
 ```bash
-python scripts/smoke_runtime.py dist/deploy.zip --expected-commit <vollständige-Commit-ID>
+python scripts/smoke_runtime.py dist/deploy.zip --expected-commit "$(git rev-parse HEAD)"
 ```
 
-Die Commit-ID liefert `git rev-parse HEAD`.
+Das ZIP muss aus demselben Commit wie `HEAD` stammen. Den Befehl in einem vollständig committeten Arbeitsstand ausführen.
 
 Auf Moodle werden Repository-URL und `CsereklyeBotondLB-324.zip` abgegeben. Das Archiv enthält genau einen gleichnamigen Projektordner mit Code, Tests und Dokumentation. `.env`, `.venv` und `.git` gehören nicht hinein. Das endgültige Archiv wird nach dem Deployment aus dem finalen Stand erstellt und auf Vollständigkeit und ausgeschlossene Geheimnisse geprüft.
 
