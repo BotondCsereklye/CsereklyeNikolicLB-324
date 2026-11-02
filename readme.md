@@ -10,6 +10,8 @@ Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324
 
 [DevOps-Grundlagen und Werkzeugvergleich](docs/DEVOPS.md), [Bewertungsraster und Nachweiszuordnung](docs/RASTER.md) sowie [Projektteam und Aufgabenaufteilung](docs/TEAM.md) ergänzen die technischen Unterlagen. Historische Einzelbeiträge werden nur nach Bestätigung zugeordnet.
 
+Die aktuelle KI-gestützte Gegenprüfung im Auftrag von Aleksandar steht in [docs/ABNAHME_ALEKSANDAR.md](docs/ABNAHME_ALEKSANDAR.md). Sie dokumentiert tatsächlich ausgeführte Tests und offene Punkte und ersetzt keine persönliche mündliche Erläuterung.
+
 ## Lokal starten
 
 Voraussetzungen: Git und Python 3.12; dieselbe Version wird lokal und in Actions verwendet.
@@ -82,7 +84,7 @@ Issue → Feature-Branch aus dev → Commit → Push → PR nach dev
 
 ## Aufgabe 4 Azure und Passwort übertragen
 
-Die vollständige Anleitung steht in [docs/AZURE.md](docs/AZURE.md). Der separate Workflow `deploy-azure.yml` reagiert ausschliesslich auf Pushes nach `main`, also auch auf einen PR-Merge. Er prüft das Release, verpackt nur Laufzeitdateien, hält ein Artefakt mit Commit-ID fest, liefert es über OIDC nach Azure aus und prüft die Commit-ID auf `/health`.
+Die vollständige Anleitung steht in [docs/AZURE.md](docs/AZURE.md). Der separate Workflow `deploy-azure.yml` startet automatisch bei Pushes nach `main`, also auch bei einem PR-Merge. Zusätzlich ist ein manueller Start vorgesehen; seine Jobs laufen nur auf `main`. Er prüft das Release, verpackt nur Laufzeitdateien, hält ein Artefakt mit Commit-ID fest, liefert es nach erfolgter Azure-Konfiguration über OIDC aus und prüft die Commit-ID auf `/health`.
 
 Im Azure App Service unter Einstellungen → Umgebungsvariablen/App settings `PASSWORD` anlegen. Für die LB ist der Wert der GitHub-Benutzername **BotondCsereklye**. Zusätzlich einen zufälligen, stabilen `SECRET_KEY` setzen. Änderungen speichern und den App-Neustart abwarten. Die Anwendung liest die Azure-Umgebungsvariablen; die lokale `.env` wird nicht hochgeladen. Den Erfolg durch Login auf der echten Azure-URL prüfen.
 

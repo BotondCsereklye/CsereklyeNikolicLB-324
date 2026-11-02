@@ -31,7 +31,7 @@ Für diese LB zählen die Verknüpfung mit Code und Tests, eine verständliche A
 | Kriterium | GitHub Issues | Trello | Markdown im Repository |
 | --- | --- | --- | --- |
 | Struktur | Issue-Formular, Labels und Abnahmekriterien | Karten, Listen, Labels und Checklisten | Frei gestaltete Tabellen und Checklisten |
-| Nachvollziehbarkeit | Referenzen in Commits und PRs mit automatischen Verknüpfungen | Repository- und PR-Links müssen an der Karte gepflegt werden | Links und Status im Text; Änderungshistorie in Git |
+| Nachvollziehbarkeit | Referenzen in Commits und PRs mit automatischen Verknüpfungen | Links an Karten; mit GitHub Power-Up können Branches, Commits, Issues und PRs samt Status angehängt werden | Links und Status im Text; Änderungshistorie in Git |
 | Zuständigkeiten | Zuweisung an berechtigte GitHub-Konten; Namen zusätzlich im Text | Mitglieder und Checklisten auf Karten | Namen im Text |
 | Zusammenarbeit | Diskussion neben Anforderung und Codeänderung | Visuelle Übersicht über den Arbeitsstand | Einfach für wenige Aufgaben; parallele Änderungen können Git-Konflikte erzeugen |
 | Aufwand für diese LB | Bereits mit Repository, PRs und CI verbunden | Zusätzliches Board und Abgleich mit GitHub | Kein weiterer Dienst, aber manuelle Statuspflege |
@@ -41,11 +41,23 @@ Wir verwenden GitHub Issues als führende Aufgabenverwaltung. Anforderungen, PRs
 
 Die Funktionsbeschreibungen stützen sich auf [GitHub: About issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) und [Atlassian: Add and customize cards and lists](https://support.atlassian.com/trello/docs/add-and-customize-cards-and-lists/). Die projektspezifische Eignungsbewertung ist unsere daraus abgeleitete Beurteilung. Es wurden keine zusätzlichen Dienste eingerichtet.
 
+Trello bietet mit dem [GitHub Power-Up](https://support.atlassian.com/trello/docs/using-the-github-power-up/) eine Integration an. Die Entscheidung gegen ein zusätzliches Board beruht hier auf dem Einrichtungs- und Pflegeaufwand, nicht auf einer fehlenden GitHub-Anbindung. Das Power-Up wurde für diese Gegenprüfung anhand der Herstellerdokumentation geprüft und nicht eingerichtet.
+
 ## Umgebung, Versionen und Artefakte
 
 Eine virtuelle Python-Umgebung trennt Projektabhängigkeiten vom Betriebssystem. Die gepinnten Dateien `requirements.txt` und `requirements-dev.txt` halten Laufzeit und Entwicklung reproduzierbar. Ein Container wäre eine weitere Möglichkeit zur Isolation; für den vorgegebenen Python App Service genügt hier die virtuelle Umgebung mit demselben Python 3.12 wie in Actions.
 
 Git versioniert Quellcode und Dokumentation. `main` enthält den Release-Stand, `dev` geprüfte Integration und ein Feature-Branch die konkrete Änderung. Die Version `0.2.0` bezeichnet den Funktionsstand; die vollständige Git-Commit-ID identifiziert den genauen Quellstand.
+
+Für LZ 3.1 unterscheiden wir die Versionsverwaltung von ihrer Hosting-Plattform:
+
+| Werkzeug | Arbeitsweise | Einordnung für dieses Projekt |
+| --- | --- | --- |
+| Git | Verteilt; ein vollständiger Klon enthält die Historie, lokale Commits und Branches sind möglich | Verwendete Versionsverwaltung; passt zu Feature-Branches, PRs und Actions. Ein flacher Klon enthält nur einen Teil der Historie. |
+| Mercurial | Ebenfalls verteilte Versionsverwaltung mit lokaler Historie und lokalen Commits | Technische Alternative; für den vorgegebenen GitHub-Ablauf nicht gewählt. |
+| Subversion (SVN) | Zentral; die gemeinsame Historie liegt auf dem Server, Commits werden dort gespeichert | Alternative für zentral organisierte Entwicklung; hier nicht verwendet. |
+
+GitHub hostet Git-Repositories und ergänzt Issues, Pull Requests und Actions. Es ist keine zusätzliche Versionsverwaltung. Quelle für zentrale und verteilte Systeme: [Pro Git: About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). Die Alternativen werden erklärt; eine praktische Nutzung von SVN oder Mercurial wird nicht behauptet. Der Ablauf mit `dev` als Integrationsast ist die in der LB verlangte Anpassung des GitHub Flow.
 
 `deploy.zip` enthält nur freigegebene Laufzeitdateien und `release.json` mit Version, Commit und Dateihashes. Der Release-Job prüft genau dieses ZIP mit Gunicorn und HTTP und speichert es als Actions-Artefakt `tagebbbuch-<Commit-ID>` für 14 Tage. Der Azure-Job lädt dasselbe Artefakt desselben Laufs. Das Abgabe-ZIP enthält zusätzlich Tests und Dokumentation; das Git-Bundle sichert Branches und Historie. `.env`, `.venv` und Git-Interna gehören nicht ins Abgabe-ZIP.
 
