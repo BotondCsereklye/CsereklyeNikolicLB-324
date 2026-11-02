@@ -15,9 +15,7 @@ Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**
 | [DEVOPS](docs/DEVOPS.md) | Grundlagen, Werkzeugvergleich und Entscheidungen |
 | [RASTER](docs/RASTER.md) | Zuordnung der fünf Kompetenzbänder |
 | [NACHWEISE](docs/NACHWEISE.md) | Issues, PRs, Tests und Artefakte |
-| [TEAM](docs/TEAM.md) | Zuständigkeiten |
-| [ABGABECHECK](docs/ABGABECHECK.md) | Geprüfte und offene Abgabepunkte |
-| [Prüfbericht](docs/ABNAHME_ALEKSANDAR.md) | Technische Gegenprüfung |
+| [TESTS](docs/TESTS.md) | Testfälle und vollständiger Integrationstest |
 
 ## Lokal starten
 
@@ -120,6 +118,6 @@ python scripts/smoke_runtime.py dist/deploy.zip --expected-commit <vollständige
 
 Die Commit-ID liefert `git rev-parse HEAD`.
 
-Auf Moodle werden Repository-URL und `CsereklyeBotondLB-324.zip` abgegeben. Das Archiv enthält genau einen gleichnamigen Projektordner mit Code, Tests und Dokumentation. `.env`, `.venv` und `.git` gehören nicht hinein. Das endgültige Archiv wird nach dem Deployment aus dem finalen Stand erstellt und anhand der [Abgabecheckliste](docs/ABGABECHECK.md) geprüft.
+Auf Moodle werden Repository-URL und `CsereklyeBotondLB-324.zip` abgegeben. Das Archiv enthält genau einen gleichnamigen Projektordner mit Code, Tests und Dokumentation. `.env`, `.venv` und `.git` gehören nicht hinein. Das endgültige Archiv wird nach dem Deployment aus dem finalen Stand erstellt und auf Vollständigkeit und ausgeschlossene Geheimnisse geprüft.
 
 Quellen: [pre-commit](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages), [GitHub Workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), [Azure-Deployment](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions).
