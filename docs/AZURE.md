@@ -2,7 +2,13 @@
 
 Status: pausiert bis zur Freigabe. Der Job `deploy` ist im Workflow ausdrücklich mit `&& false` gesperrt. Diese Sperre erst zur freigegebenen Deployment-Einrichtung entfernen. Tests und Artefaktbau auf main bleiben aktiv.
 
-Offene Einrichtung und fachliche Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) verfolgt. Botond verantwortet die Azure-Konfiguration; Aleksandar übernimmt danach die fachliche Abnahme. Am 26. Oktober 2026 stand kein authentifizierter Azure-Zugang zur Verfügung.
+Offene Einrichtung und fachliche Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) verfolgt. Die Konfiguration ist vorbereitet; eine erfolgreiche Cloud-Auslieferung ist noch nicht nachgewiesen.
+
+## Funktionsweise
+
+Der Deploymentprozess überträgt ein geprüftes Release in eine konfigurierte Laufzeitumgebung. In diesem Projekt startet ein Push nach main zunächst Tests, Paketbau und die HTTP-Prüfung des Laufzeit-ZIPs. Der abhängige Deployment-Job lädt dasselbe Artefakt desselben Laufs. OIDC ermöglicht die Anmeldung von GitHub Actions bei Azure ohne dauerhaft gespeichertes Azure-Client-Passwort. Der App Service startet die Anwendung mit Gunicorn und installiert die Python-Abhängigkeiten aus requirements.txt.
+
+Konfiguration und Programmdateien werden getrennt behandelt: PASSWORD und SECRET_KEY liegen in Azure App settings; die lokale .env gehört nicht zum Paket. Nach der Übertragung prüft /health, ob die erwartete Commit-ID tatsächlich läuft. Damit reicht eine erreichbare Startseite einer älteren Version nicht als erfolgreicher Auslieferungsnachweis.
 
 ## App Service und Geheimnisse
 
@@ -20,7 +26,7 @@ Offene Einrichtung und fachliche Abnahme werden in [Issue #14](https://github.co
 
 ## Release und Nachweis
 
-1. Happiness nach erfolgreicher PR-CI in `dev` übernehmen. Release-PR `dev` → `main` selbst prüfen und mergen.
+1. Nach Freigabe die Workflow-Sperre entfernen und den geprüften Release über einen PR von `dev` nach `main` übernehmen.
 2. „Azure Auslieferung main“ führt zuerst den Job `verify` aus: Tests, ZIP-Bau, echte Gunicorn-/HTTP-Prüfung und Aufbewahrung des geprüften Artefakts. Dieser Job benötigt keine Cloud-Zugangsdaten. Der abhängige Job `deploy` lädt genau dieses Artefakt und führt OIDC-Anmeldung, Auslieferung und HTTP-Prüfung durch. Fehlende OIDC-Secrets werden vor der Anmeldung nur mit ihrem Namen gemeldet. Ein übersprungener Deploy-Job gilt nicht als Auslieferung.
 3. `/health` muss `status=ok` und die Commit-ID dieses Releases zurückliefern. Das Prüfskript berücksichtigt Azure-Kaltstarts.
 4. Die tatsächliche Azure-URL im README ergänzen. In einem privaten Browserfenster einloggen, Eintrag mit `😃` verfassen und sichtbare Stimmung prüfen.
@@ -28,6 +34,10 @@ Offene Einrichtung und fachliche Abnahme werden in [Issue #14](https://github.co
 
 Nach der Azure-Einrichtung kann der Workflow über Actions → Azure Auslieferung main → Run workflow auf `main` erneut gestartet werden. Ein manueller Start auf einem anderen Branch führt keine Release- oder Deployment-Jobs aus. Die Variable `AZURE_WEBAPP_NAME` muss auf Repository-Ebene gesetzt sein; die OIDC-Secrets können auf Repository-Ebene oder im Environment `production` liegen.
 
-Die Vorlage verwendet Arbeitsspeicher statt persistenter Datenbank. Neustarts und Auslieferungen löschen die Demo-Einträge.
+## Fehler und Wiederherstellung
+
+Ein fehlerhafter Prüfjob stoppt den Ablauf vor der Auslieferung. Ein fehlgeschlagener Deployment- oder Health-Schritt muss untersucht werden; der gesamte Lauf gilt dann nicht als erfolgreiche Auslieferung. Für eine Rücknahme wird der problematische Code mit git revert auf einem neuen Feature-Branch rückgängig gemacht, durch die dev-CI geprüft und als neues Release übernommen. /health bestätigt anschliessend den Commit dieses korrigierten Releases.
+
+Die Vorlage verwendet Arbeitsspeicher statt persistenter Datenbank. Neustarts und Auslieferungen löschen die Demo-Einträge; deshalb wird ein einzelner Gunicorn-Worker verwendet.
 
 Quellen: [Microsoft Deployment mit GitHub Actions](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions), [Microsoft Python-App-Konfiguration](https://learn.microsoft.com/en-us/azure/app-service/configure-language-python).
