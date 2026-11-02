@@ -1,72 +1,44 @@
-# Durchgeführte Arbeit und Nachweise
+# Nachweise
 
-## Aktualisierung vom 26. Oktober 2026
+Die technische Gegenprüfung ist im [Prüfbericht](ABNAHME_ALEKSANDAR.md) dokumentiert. Die folgende Übersicht verbindet Anforderungen mit Umsetzung und automatisierten Prüfungen.
 
-Die folgenden älteren Abschnitte dokumentieren die Prüfungen vom 9. Oktober. Für den aktuellen Abschluss wurden [Issue #12](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/12) für Dokumentation und Teamaufteilung, [Issue #13](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/13) für die automatische Artefaktprüfung und [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) für den weiterhin offenen Azure-Nachweis angelegt. Die Umsetzung erfolgt auf `feature/12-raster-team-abschluss` aus `dev`.
+## Anforderungen und Umsetzung
 
-| Prüfung oder Änderung | Aktueller Nachweis |
-| --- | --- |
-| Projektteam | Botond Csereklye und Aleksandar Nikolic; bestätigte Zusammenarbeit und Abschlusszuständigkeiten in [TEAM.md](TEAM.md). Bisherige individuelle Beiträge von Aleksandar noch zu bestätigen. |
-| Dokumentationslücken | DevOps-Grundlagen, Begriffe, Werkzeugvergleich und begründete Entscheidung in [DEVOPS.md](DEVOPS.md); Zuordnung jedes Kompetenzbandes in [RASTER.md](RASTER.md). |
-| Lokale Gesamtsuite | 24 Tests erfolgreich; 97,62 % Statement-/Branch-Abdeckung von `app.py`; Black-Prüfung erfolgreich. |
-| Echter Artefakt-Integrationstest | ZIP separat entpackt, Gunicorn gestartet und Health-Commit, falsches Passwort, Login, Happiness am gespeicherten Eintrag, Escaping und Logout über HTTP geprüft; Prozess nach Prüfung beendet. |
-| Negative Abnahme | ZIP mit falschem Release-Commit wird zurückgewiesen. Absichtlich defekte Happiness-Implementierung im ZIP wird erkannt. Dadurch kann das Formular-Emoji keinen falschen Erfolg mehr erzeugen. |
-| Release-Pipeline | `verify` baut und prüft das ZIP ohne Cloud-Zugang. `deploy` benötigt den erfolgreichen Prüfjob und lädt genau dessen Artefakt. Fehlende Azure-Konfiguration erzeugt eine ausdrückliche Warnung; manuelle Wiederholung nur auf `main`. |
-| GitHub-Nachweis | [PR #15](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/15) nach `dev`; Implementierungscommit `f4b18d4`; tatsächlicher erfolgreicher [pytest-Lauf 40295449518](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40295449518). Nachfolgende Prüf- und Release-Läufe stehen am PR und unter [Actions](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions); ein lokaler Erfolg ersetzt deren Status nicht. |
-| Sichtbarkeit | Am 26. Oktober live als privat geprüft; bleibt auf ausdrücklichen Benutzerwunsch privat. Die öffentliche Sichtbarkeit der LB ist bewusst aufgeschoben. |
-| Azure | Kein authentifizierter Zugang verfügbar; Repository-Variablen, Actions-Secrets und Environments waren bei der Prüfung leer. Echte App-URL, OIDC-Konfiguration und Live-Abnahme bleiben in Issue #14 offen. |
-
-Ein grüner Release-Prüfjob bei übersprungenem `deploy` ist ein geprüfter Build, keine Azure-Auslieferung. Die persönliche fachliche Gegenprüfung durch Aleksandar und eine Moodle-Abgabe werden nicht als durchgeführt angegeben.
-
-## Ausgangslage
-
-Am 9. Oktober 2026 wurden die Modulaufträge in `M324_Aufgaben` und die konkrete `LB-324.docx` ausgewertet. Das dortige `tagebbbuch.zip` liefert den Ausgangscode. Die `.env` aus dem Archiv und die enthaltene verschachtelte Dublette wurden nicht übernommen. Alte Prüfungen oder private Projekte werden nicht verwendet.
-
-Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324. Es wurde öffentlich angelegt, ist bei der Schlussprüfung am 9. Oktober 2026 jedoch privat. Die GitHub-API meldet `disabled: false`; die Anforderung „öffentlich“ ist aktuell nicht erfüllt.
-
-| Schritt | Tatsächlicher Nachweis |
-| --- | --- |
-| Ausgangsvorlage | [Issue #1](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/1), Commit `51af91a` mit Issue-Bezug |
-| CI/CD-Anforderung vor Änderung | [Issue #2](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/2); Branch `feature/2-ci-cd` aus `dev` |
-| Tests zuerst | Vor der Plattform-Anpassung: 4 fehlgeschlagene, 8 erfolgreiche Tests; nach Anpassung 13 erfolgreiche Tests mit 94,81 % kombinierter Statement-/Branch-Abdeckung |
-| Zusätzlicher Fehlerfall | Umlaut-Passwort löste einen TypeError aus; eigener Negativtest führte zur Verwendung eines UTF-8-Bytevergleichs |
-| Labels | Funktionale Anforderung, Qualitätsanforderung und Randanforderung als echte GitHub-Labels angelegt |
+| Arbeit | Issue | Umsetzung und Nachweis |
+| --- | --- | --- |
+| Ausgangsvorlage | #1 | Commit `51af91a` |
+| Issue-Vorlage, Labels, Hooks und CI | #2 | [PR #3](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/3), Merge nach dev `40aacaa`; [CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37933992918) erfolgreich |
+| Happiness | #5 | [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6), Merge `bd5d937`; [CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37935212233) erfolgreich |
+| Frühere Abgabeunterlagen | #7 | PRs #9 bis #11; [dev-CI](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37936653040) erfolgreich |
+| Grundlagen und Teamaufteilung | #12 | [PR #15](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/15) |
+| HTTP-Prüfung des Laufzeit-ZIPs | #13 | PR #15, `tests/test_runtime.py` und `scripts/smoke_runtime.py` |
+| Gegenprüfung und Abschlussunterlagen | #17 | [PR #18](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/18) |
+| Echte Azure-Auslieferung | #14 | Offen |
 
 ## Happiness über GitHub Flow
 
-1. [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde vor der Änderung angelegt, mit dem Typ „Funktionale Anforderung“ und den Abnahmekriterien der LB.
-2. `feature/5-happiness` wurde aus `dev` erstellt. `dev` stand dabei auf `40aacaa`, dem geprüften Merge der CI/CD-Einrichtung.
-3. Der vorgegebene Test und drei ergänzende Tests wurden zuerst geschrieben. Alle vier scheiterten vor der Implementierung.
-4. Der tatsächliche Commit-Hook formatierte die beiden Testdateien automatisch und stoppte den ersten Commitversuch. Nach erneutem Staging entstand Commit `536fb6a` mit Bezug zu #5.
-5. Ein tatsächlicher Push dieses Test-Commits wurde vom pre-push-Hook verhindert: 4 fehlgeschlagene und 17 erfolgreiche Tests; der fehlerhafte Stand wurde nicht als Remote-Branch veröffentlicht.
-6. Erst danach wurde `Entry.happiness` ergänzt, das Formular erweitert und die Stimmung am Eintrag dargestellt. Fehlende Werte bleiben für bestehende Aufrufe neutral; ungültige Werte werden abgelehnt. Die Version steigt von 0.1.0 auf 0.2.0.
+Die Anforderung steht in [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5). Der Branch `feature/5-happiness` stammt aus dem damaligen dev-Stand `40aacaa`. Test-Commit `536fb6a` liegt vor Implementierungscommit `e1fa937`. PR #6 wurde nach erfolgreicher CI in dev übernommen. Der Branch bleibt gemäss LB erhalten.
 
-7. [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) zielte auf `dev` und bestand die echte GitHub-CI: [Lauf 37935212233](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37935212233). Danach wurde er mit Merge-Commit `bd5d937` übernommen. Der Feature-Branch bleibt lokal und auf GitHub vorhanden.
-8. Issue #5 wurde nach dem erfolgreichen Merge nach `dev` manuell als erledigt geschlossen. GitHubs `Closes`-Automatik schliesst Issues erst beim Merge auf den Standardast `main`; deshalb wird die manuelle Schliessung hier ausdrücklich angegeben.
+Das damalige lokale Protokoll beschreibt vier zunächst fehlgeschlagene Happiness-Tests und einen durch pytest blockierten Push. Nach der Umsetzung bestanden 21 Tests. Diese lokalen Hook-Ereignisse sind historische Angaben; die verlinkte GitHub-CI belegt den erfolgreichen integrierten Stand.
 
-## Abschlussprüfungen
+## Automatisierte Prüfung und Artefakt
 
-| Prüfung | Ergebnis |
-| --- | --- |
-| Gesamte lokale Testsuite | 21 Tests erfolgreich; inklusive des in der LB vorgegebenen Happiness-Tests |
-| Coverage der Anwendung | 97,62 % kombinierte Statement-/Branch-Abdeckung; Mindestwert 80 % durch Konfiguration geprüft |
-| Formatierung beim Commit | Tatsächlich automatisch ausgeführt und Dateien verändert; danach erfolgreich erneut committed |
-| Tests beim Push | Fehlerhafter Stand tatsächlich blockiert; korrigierter Stand anschliessend erfolgreich gepusht |
-| Plattform-CI | [PR #3](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/3), [erfolgreicher Lauf 37933992918](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37933992918), Merge nach dev `40aacaa` |
-| Infrastruktur auf Standardast | [PR #4](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/4), Merge `bc8773e`; kein Azure-Erfolg damit behauptet |
-| Funktionsstand auf Standardast | Während der Schlussprüfung wurde [PR #8](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/8) von `feature/7-abgabenachweise` nach `main` gemergt (`88f71a9`). Damit liegt Happiness auch auf main; [Azure-Lauf 37936394976](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37936394976) ist **übersprungen**, nicht erfolgreich ausgeliefert. |
-| Schlussdokumentation auf dev | [PR #9](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/9), erfolgreicher [pytest-Lauf 37936403673](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/37936403673), Merge `dee4358` |
-| Branch-Schutz | `dev` verlangt PR und erfolgreichen `pytest`-Check; `main` verlangt PR; Regeln gelten auch für Administratoren; automatische Branch-Löschung ausgeschaltet |
-| Browser auf Desktop | Isoliertes Chrome-Fenster mit Playwright, 1280 × 900: falsches/richtiges Passwort, Eintrag mit 😃, Neuladen und Logout erfolgreich; Screenshot visuell geprüft |
-| Browser in Mobilansicht | Isolierter Browser-Kontext, 390 × 844: derselbe Ablauf erfolgreich; kein horizontaler Überlauf; Screenshot visuell geprüft. Kein physisches Mobilgerät behauptet. |
-| Gebautes Laufzeit-ZIP | In getrennten Ordner entpackt und mit echtem Gunicorn-Prozess gestartet. Version 0.2.0 und Commit `bd5d937` über HTTP bestätigt; Login, Stimmung, Escaping und Logout erfolgreich. |
-| Geheimnisse | Lokale `.env` ist ignoriert und unversioniert; Laufzeit-ZIP enthält nur die feste Allowlist aus `package_release.py` |
+Im [Release-Lauf vom 26. Oktober](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40295820919) wurden für Commit `a30dbaa95720acd087e9f71776de18ff2d8b03df` folgende Schritte erfolgreich ausgeführt:
 
-Die abschliessende Dokumentation gehört zu [Issue #7](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/7). Der erste Push von `feature/7-abgabenachweise` wurde mit „Your repository is disabled“ und HTTP 403 abgewiesen, obwohl die anschliessende API-Abfrage `disabled: false` und Administrator-/Push-Rechte meldete. Die Ursache ist nicht bestätigt. Der erneute Push war erfolgreich, einschliesslich des Test-Hooks. Die Schlussdokumentation ist lokal und auf GitHub vorhanden. Ein fremdes oder menschliches Review wurde nicht durchgeführt.
+- 24 Tests;
+- Laufzeit-ZIP mit Version, Commit-ID und Dateihashes;
+- Start genau dieses ZIPs mit Gunicorn;
+- HTTP-Prüfung von Health-Commit, falschem Passwort, Login, Happiness, Escaping und Logout;
+- Upload als `tagebbbuch-a30dbaa95720acd087e9f71776de18ff2d8b03df`.
 
-## Offene Nachweise
+Der Job „Auf Azure ausliefern“ wurde wegen fehlender `AZURE_WEBAPP_NAME` übersprungen.
 
-- Öffentliche GitHub-Sichtbarkeit steht aus; der Benutzer wurde zur beabsichtigten Änderung auf privat gefragt.
-- Azure-App, OIDC-Identität, Runtime-Geheimnisse und reale App-URL sind noch nicht eingerichtet/verifiziert.
-- Kein erfolgreicher Azure-Deployment-Lauf und keine Azure-Anmeldeprüfung werden behauptet.
-- Die manuelle Schlussprüfung und der Moodle-Upload erfolgen durch den Benutzer.
+[CI-Lauf 40364160076](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/actions/runs/40364160076) zu PR #18 bestätigt weitere 24 bestandene Tests. Beide Protokolle wurden am 2. November 2026 erneut gelesen. Spätere Dokumentationsänderungen werden durch den jeweils aktuellen Check an PR #18 geprüft.
+
+## Frühere lokale Prüfungen
+
+Der Bericht vom 9. Oktober nennt erfolgreiche Desktop-/Mobilansicht-Prüfungen, ausgeführte Hooks und ein separat gestartetes Laufzeit-ZIP. Der Bericht vom 26. Oktober nennt 97,62 % kombinierte Statement-/Branch-Abdeckung von app.py. Diese Ergebnisse gehören zu den damaligen Ständen. Die historischen Detailfassungen stehen in der Git-Historie dieser Datei.
+
+## Noch offen
+
+Azure-URL, erfolgreiche Auslieferung und fachliche Live-Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) ergänzt. Repository-Sichtbarkeit, endgültiges Abgabe-ZIP und Moodle-Upload stehen in [ABGABECHECK.md](ABGABECHECK.md).
