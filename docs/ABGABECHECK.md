@@ -1,26 +1,53 @@
-# Prüfung vor der Abgabe
+# Abgabecheckliste
 
-Die konkrete LB bewertet 33 Punkte; Aufgabe 5 zählt doppelt. Offene Punkte sind keine erfüllten Kriterien.
+Prüfstand: 2. November 2026, vor der Azure-Einrichtung. Grundlage sind `LB-324.docx` und das Kompetenzraster. Diese Checkliste wird beim endgültigen Release nochmals aktualisiert.
 
-| Kriterium | Prüfschritt |
-| --- | --- |
-| 0 Administration | Ordner und ZIP heissen `CsereklyeBotondLB-324`; ZIP enthält genau einen gleichnamigen Projektordner. **Bewusst aufgeschoben:** Das Repository bleibt gemäss Auftrag vom 26. Oktober 2026 privat; die öffentliche Sichtbarkeit der LB ist noch nicht erfüllt. |
-| 1-1 Labels/Vorlage | Drei vorgeschriebene Typ-Labels in GitHub und Anforderungsvorlage mit der vollständigen Satzstruktur prüfen. |
-| 2-1 Commit | Black formatiert auf pre-commit; tatsächliche Hook-Ausführung prüfen. |
-| 2-2 Push | pytest läuft auf pre-push, immer und mit der ganzen Testsuite. |
-| 2-3 Anleitung | Installation und Registrierung beider Hook-Typen anhand des README nachvollziehen. |
-| 3-1 CI | Echter PR nach dev hat erfolgreichen pytest-Check; CI reagiert auf keine anderen Ereignisse. |
-| 4-1 Azure-App | **Offen:** echte URL, Login und sichtbare App prüfen. |
-| 4-2 Geheimnisse | **Offen:** Azure-App-settings und Login prüfen; `.env` fehlt in Git und Archiv. |
-| 4-3 Deployment | **Offen:** Release-PR nach main und erfolgreichen Azure-Lauf mit gleicher Commit-ID prüfen. |
-| 5-1 GitHub Flow | Issue → Feature aus dev → Tests/Commits → PR → grüner Check → Merge; Feature-Branch bleibt erhalten. |
+## Vor dem Deployment
 
-- [x] GitHub-Sichtbarkeit mit dem Benutzer geklärt: vorerst privat lassen.
-- [ ] Öffentliche Sichtbarkeit gemäss LB erst nach neuem Auftrag umsetzen.
-- [x] Botond Csereklye und Aleksandar Nikolic als Projektpartner ergänzen; Abschlusszuständigkeiten in `TEAM.md` festhalten.
-- [ ] Bisherige individuelle Beiträge von Aleksandar anhand der Rückmeldung konkret ergänzen.
-- [x] DevOps-Grundlagen, Werkzeugvergleich und Rasterzuordnung dokumentieren.
-- [ ] Azure vervollständigen, bevor die LB als vollständig abgegeben wird.
-- [ ] README, Nachweise und Quellcode selbst kontrollieren.
-- [ ] Repository-URL und ZIP auf Moodle abgeben; dies wurde nicht automatisiert durchgeführt.
-- [ ] Erst nach tatsächlichem Abschluss und Upload die lokale Löschvorgabe der Prüfungsdatei von Hand umsetzen.
+- [x] Projektname `CsereklyeBotondLB-324` entspricht dem geforderten Namensschema.
+- [x] Drei Typ-Labels sind an echten Issues vorhanden: Funktionale Anforderung (#5), Qualitätsanforderung (#13), Randanforderung (#14).
+- [x] Issue-Vorlage enthält Zielsystem, Priorität, Systemaktivität, Ergänzungen, Funktionalität, Bedingungen und Abnahmekriterien.
+- [x] Black ist für pre-commit konfiguriert.
+- [x] pytest ist für pre-push konfiguriert; ganze Suite, `always_run: true`, `pass_filenames: false`.
+- [x] README enthält Installation, Registrierung und Verwendung beider Hook-Typen.
+- [x] Integrations-CI startet ausschliesslich bei Pull Requests nach dev und führt pytest aus.
+- [x] Happiness ist über Issue #5, Test-/Implementierungscommits und PR #6 nachvollziehbar integriert.
+- [x] `feature/5-happiness` ist als vorgeschriebener Nachweis vorhanden.
+- [x] Reale GitHub-Protokolle bestätigen 24 bestandene Tests und eine HTTP-Prüfung des Laufzeit-ZIPs.
+- [x] Laufzeit-Paket verwendet eine feste Dateiliste; `.env`, `.venv`, Tests und Git-Interna gehören nicht zum Deployment-ZIP.
+- [x] DevOps-Grundlagen, Werkzeugvergleich, Versionsverwaltung und Rasterzuordnung sind dokumentiert.
+- [x] Beide Projektpartner und Abschlusszuständigkeiten sind genannt.
+- [ ] PR #18 nach erfolgreichem aktuellem CI-Check in dev übernehmen und Issue #17 schliessen.
+- [ ] Abgeschlossene Feature-Branches nach Prüfung ihrer vollständigen Integration entfernen; Happiness-Branch behalten.
+- [ ] Beide Partner prüfen die Unterlagen persönlich und ergänzen ihre tatsächlichen bisherigen Beiträge.
+
+Die Haken zur Konfiguration beruhen auf Datei- und GitHub-Prüfung. Lokale Hook-Ausführung und Coverage vom 26. Oktober sind historische Nachweise im [Prüfbericht](ABNAHME_ALEKSANDAR.md). Ein aktueller lokaler Testlauf auf beiden Notebooks ist damit nicht bestätigt.
+
+## Deployment
+
+Der Azure-Job ist bis zur Freigabe im Workflow mit `&& false` gesperrt.
+
+- [ ] Deployment nach Freigabe im Workflow wieder aktivieren.
+
+- [ ] Azure App Service und OIDC-Zugang einrichten.
+- [ ] `PASSWORD`, `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT` in Azure setzen.
+- [ ] GitHub-OIDC-Secrets und `AZURE_WEBAPP_NAME` konfigurieren.
+- [ ] Geprüften Release über PR von dev nach main übernehmen.
+- [ ] Erfolgreichen Azure-Deployment-Job nachweisen.
+- [ ] Echte App-URL im README ergänzen.
+- [ ] `/health` bestätigt den erwarteten Release-Commit.
+- [ ] Login mit LB-Passwort, alle drei Stimmungen und Logout auf der echten URL prüfen.
+- [ ] Datum, Release-Commit und Actions-Lauf in NACHWEISE.md ergänzen; Issue #14 erst dann schliessen.
+
+## Endgültige Abgabe
+
+- [ ] Öffentliche Sichtbarkeit gemäss LB herstellen oder abweichende Freigabe der Lehrperson festhalten. Aktuell ist das Repository privat.
+- [ ] Finales `CsereklyeBotondLB-324.zip` mit genau einem gleichnamigen Projektordner erstellen.
+- [ ] Archiv öffnen und Code, Tests, README und Dokumentation auf Vollständigkeit prüfen.
+- [ ] Keine `.env`, lokalen Zugangsdaten, `.venv` oder `.git` im Archiv.
+- [ ] Archivstand und finalen main-Commit abgleichen.
+- [ ] Repository-URL auf Moodle abgeben.
+- [ ] Projektarchiv auf Moodle hochladen und Upload kontrollieren.
+- [ ] Die Löschvorgabe der LB erst nach tatsächlichem Abschluss und Upload persönlich umsetzen.
+
+Bewertung der konkreten LB: 33 gewichtete Punkte, Aufgabe 5 doppelt. Die Gewichtung der fünf Kompetenzbänder steht separat in [RASTER.md](RASTER.md).

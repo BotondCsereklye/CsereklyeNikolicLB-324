@@ -1,6 +1,6 @@
 # Azure Auslieferung
 
-Status: noch nicht live durchgeführt. Ein lokaler Start ersetzt den geforderten Azure-Nachweis nicht.
+Status: pausiert bis zur Freigabe. Der Job `deploy` ist im Workflow ausdrücklich mit `&& false` gesperrt. Diese Sperre erst zur freigegebenen Deployment-Einrichtung entfernen. Tests und Artefaktbau auf main bleiben aktiv.
 
 Offene Einrichtung und fachliche Abnahme werden in [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14) verfolgt. Botond verantwortet die Azure-Konfiguration; Aleksandar übernimmt danach die fachliche Abnahme. Am 26. Oktober 2026 stand kein authentifizierter Azure-Zugang zur Verfügung.
 

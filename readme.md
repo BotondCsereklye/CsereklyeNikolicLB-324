@@ -1,62 +1,84 @@
 # CsereklyeBotondLB-324
 
-Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**. Grundlage: die offizielle Tagebbbuch-Vorlage aus `tagebbbuch.zip` und die fünf Aufgaben in `LB-324.docx`.
+Leistungsbeurteilung M324 DevOps von **Botond Csereklye und Aleksandar Nikolic**. Ausgangspunkt ist die Tagebbbuch-Vorlage aus dem Modul. Die Aufgaben stehen in `LB-324.docx`.
 
-Repository: https://github.com/BotondCsereklye/CsereklyeBotondLB-324
+## Stand und Orientierung
 
-**Stand vom 26. Oktober 2026:** Das Repository bleibt auf ausdrücklichen Wunsch privat. Die öffentliche Sichtbarkeit gemäss LB ist bewusst aufgeschoben. Die Funktionsänderungen und bisherigen erfolgreichen CI-Läufe sind auf GitHub vorhanden.
+- `dev` enthält den geprüften Entwicklungsstand.
+- `main` enthält den aktuellen Abgabestand. Der Azure-Deployment-Job ist bis zur Freigabe gesperrt.
+- `feature/5-happiness` bleibt als vorgeschriebener Nachweis der Funktionsänderung erhalten.
+- Azure-URL und erfolgreiche Cloud-Auslieferung stehen noch aus: [Issue #14](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/14).
+- Das Repository ist privat. Die LB verlangt ein öffentliches Repository; diese Abgabevorgabe ist noch offen.
 
-**Azure-URL: noch offen.** Es ist noch keine laufende Azure-Auslieferung nachgewiesen. Aufgabe 4 ist deshalb nicht vollständig erfüllt.
-
-[DevOps-Grundlagen und Werkzeugvergleich](docs/DEVOPS.md), [Bewertungsraster und Nachweiszuordnung](docs/RASTER.md) sowie [Projektteam und Aufgabenaufteilung](docs/TEAM.md) ergänzen die technischen Unterlagen. Historische Einzelbeiträge werden nur nach Bestätigung zugeordnet.
+| Unterlage | Inhalt |
+| --- | --- |
+| [DEVOPS](docs/DEVOPS.md) | Grundlagen, Werkzeugvergleich und Entscheidungen |
+| [RASTER](docs/RASTER.md) | Zuordnung der fünf Kompetenzbänder |
+| [NACHWEISE](docs/NACHWEISE.md) | Issues, PRs, Tests und Artefakte |
+| [TEAM](docs/TEAM.md) | Zuständigkeiten |
+| [ABGABECHECK](docs/ABGABECHECK.md) | Geprüfte und offene Abgabepunkte |
+| [Prüfbericht](docs/ABNAHME_ALEKSANDAR.md) | Technische Gegenprüfung |
 
 ## Lokal starten
 
-Voraussetzungen: Git und Python 3.12; dieselbe Version wird lokal und in Actions verwendet.
+Voraussetzungen: Git und Python 3.12. Zuerst das Repository klonen und in den Entwicklungsast wechseln:
 
 ```bash
 git clone https://github.com/BotondCsereklye/CsereklyeBotondLB-324.git
 cd CsereklyeBotondLB-324
 git switch dev
+```
+
+macOS/Linux:
+
+```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 cp .env.example .env
 ```
 
-Windows/PowerShell: `py -3.12 -m venv .venv`, danach `.venv\Scripts\Activate.ps1` und `Copy-Item .env.example .env`.
+Windows/PowerShell:
 
-In `.env` ein lokales Passwort setzen und einen zufälligen `SECRET_KEY` eintragen. Einen Schlüssel erzeugt `python -c "import secrets; print(secrets.token_hex(32))"`. `.env` niemals einchecken.
+```powershell
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+Copy-Item .env.example .env
+```
+
+In `.env` ein lokales Passwort und einen zufälligen `SECRET_KEY` eintragen. Einen Schlüssel erzeugt `python -c "import secrets; print(secrets.token_hex(32))"`. Die Datei ist in Git ausgeschlossen.
 
 ```bash
 python -m flask --app app run
 ```
 
-Öffnen: http://127.0.0.1:5000. Produktionsnah auf macOS/Linux: `python -m gunicorn --workers 1 --bind 127.0.0.1:5000 app:app`.
+Die App läuft auf http://127.0.0.1:5000. Einträge liegen wie in der Vorlage im Arbeitsspeicher. Ein Neustart löscht sie. Für Gunicorn auf Linux/macOS deshalb genau einen Worker verwenden:
 
-Die offizielle Vorlage speichert Einträge in der Liste `entries`, nicht in einer Datenbank. Ein Neustart löscht diese Daten. Mehrere Worker hätten unterschiedliche Listen; deshalb genau einen Worker verwenden. Die LB bewertet den CI/CD-Prozess, keine produktionsreife Tagebuchspeicherung.
+```bash
+python -m gunicorn --workers 1 --bind 127.0.0.1:5000 app:app
+```
 
-## Aufgabe 1 Vorlage und Labels
+## Aufgabe 1 Anforderungen
 
-Issues → New issue → **Anforderung** verwendet `.github/ISSUE_TEMPLATE/anforderung.yml`. Die Vorlage erfasst Zielsystem, Priorität (muss/soll/wird), Systemaktivität, Ergänzungen, Funktionalität, Bedingungen und Abnahmekriterien. Beispiel: „Das Tagebbbuch muss dem Benutzer die Möglichkeit bieten, eine Stimmung anzugeben, wenn er einen Eintrag verfasst.“
+Das Issue-Formular **Anforderung** erfasst Zielsystem, Priorität (`muss/soll/wird`), Systemaktivität, Ergänzungen, Funktionalität, Bedingungen und Abnahmekriterien. Die Typ-Labels **Funktionale Anforderung**, **Qualitätsanforderung** und **Randanforderung** werden manuell zugewiesen.
 
-Die manuell zuweisbaren GitHub-Labels **Funktionale Anforderung**, **Qualitätsanforderung** und **Randanforderung** sind angelegt. Jeder Änderung geht eine Issue voraus. Issue #1 dokumentiert die Ausgangsvorlage und Issue #2 die CI/CD-Einrichtung. Commits und PRs referenzieren die Issue. Die zusätzlichen Label-Aktionen der Modulübung werden hier nicht benötigt.
+Vor jeder Codeänderung wird eine Issue angelegt. Branch, Commits und PR verweisen darauf. [Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) zeigt dies für Happiness.
 
-## Aufgabe 2 pre-commit installieren
+## Aufgabe 2 Hooks
 
 Nach jedem Klonen die virtuelle Umgebung aktivieren und beide Hook-Typen installieren:
 
 ```bash
-python -m pip install -r requirements-dev.txt
 python -m pre_commit install --hook-type pre-commit --hook-type pre-push
 ```
 
-| Ereignis | Befehl | Verhalten |
+| Zeitpunkt | Befehl | Wirkung |
 | --- | --- | --- |
-| Commit | `python -m black` | Formatiert geänderte Python-Dateien automatisch, ausschliesslich auf `pre-commit`. Ändert Black Dateien, erneut stagen und committen. |
-| Push | `python -m pytest` | Testet die ganze Anwendung bei jedem Push auf `pre-push`, mit `always_run: true` und ohne Dateinamen. Fehler blockieren den Push. |
+| Commit | `python -m black` | Formatiert geänderte Python-Dateien. Bei Änderungen erneut stagen und committen. |
+| Push | `python -m pytest` | Prüft bei jedem Push die ganze Suite. Fehler verhindern den Push. |
 
-Die Umgebung muss beim Commit/Push aktiviert sein, da `language: system` verwendet wird. Werkzeugversionen sind in `requirements-dev.txt` gepinnt.
+Die Hooks verwenden `language: system`; die virtuelle Umgebung muss aktiv sein. Manuelle Prüfung:
 
 ```bash
 python -m pre_commit run --all-files --hook-stage pre-commit
@@ -64,46 +86,40 @@ python -m pre_commit run --all-files --hook-stage pre-push
 python -m pytest --cov=app --cov-report=term-missing
 ```
 
-Hooks laufen lokal und können umgangen werden. Deshalb ergänzt serverseitige CI die frühen Rückmeldungen; sie ersetzt diese nicht.
+## Aufgabe 3 Integration
 
-## Aufgabe 3 CI auf dev
+`.github/workflows/ci.yml` startet ausschliesslich bei Pull Requests nach `dev` und führt pytest aus. Die Suite prüft auch das gebaute ZIP: Gunicorn startet es separat, anschliessend werden Login, Happiness und Logout über HTTP geprüft. Negativtests erkennen falsche Commit-Metadaten und eine defekte Stimmung.
 
-`.github/workflows/ci.yml` reagiert ausschliesslich auf Pull Requests mit Ziel `dev`. Der einzige Job `pytest` installiert die Testumgebung und führt `python -m pytest` aus. Keine Push-/Issue-/Tag-Ereignisse, keine Auslieferung und kein zusätzlicher Job werden in dieser CI gestartet.
+Ablauf: Issue → Feature-Branch aus `dev` → Commit und Push → PR nach `dev` → erfolgreiche CI → Merge. Geprüfte Änderungen werden anschliessend über einen PR von `dev` nach `main` übernommen. Die Auslieferung bleibt bis zur Freigabe pausiert.
 
-Die Suite umfasst auch `tests/test_runtime.py`: Das Laufzeit-ZIP wird isoliert entpackt und mit einem echten Gunicorn-Prozess über HTTP geprüft. Ein falscher Release-Commit und eine defekte Stimmung am gespeicherten Eintrag werden durch eigene Negativtests erkannt.
+## Aufgabe 4 Azure
 
-```text
-Issue → Feature-Branch aus dev → Commit → Push → PR nach dev
-      → erfolgreicher pytest-Check → Merge nach dev
-      → geprüfter Release-PR dev nach main → Azure-Auslieferung
-```
+**Pausiert bis zur Freigabe:** Der Deployment-Job ist im Workflow durch `&& false` gesperrt. Tests und Artefaktbau dürfen auf main laufen. Noch offen sind laufende App, URL und erfolgreicher Deployment-Nachweis.
 
-`main` ist für die auszuliefernde Version reserviert. Während der Schlussprüfung wurde `feature/7-abgabenachweise` über PR #8 nach `main` gemergt; dadurch enthält auch `main` die Happiness-Funktion. Der ausgelöste Azure-Job wurde wegen fehlender Konfiguration übersprungen. Die Feature-Äste bleiben für die LB erhalten.
+Der Workflow `deploy-azure.yml` startet bei Pushes nach `main` und zusätzlich manuell. Seine Jobs laufen nur auf `main`. Zuerst werden Tests und das Laufzeit-ZIP geprüft. Der Deployment-Job übernimmt dasselbe Artefakt, liefert es über OIDC aus und prüft den Release-Commit auf `/health`.
 
-## Aufgabe 4 Azure und Passwort übertragen
+In Azure App settings werden `PASSWORD`, ein stabiler zufälliger `SECRET_KEY` und `SCM_DO_BUILD_DURING_DEPLOYMENT=true` gesetzt. Für die LB entspricht `PASSWORD` dem GitHub-Benutzernamen **BotondCsereklye**. Speichern, Neustart abwarten und den Login auf der Azure-URL prüfen. Die lokale `.env` wird nicht hochgeladen.
 
-Die vollständige Anleitung steht in [docs/AZURE.md](docs/AZURE.md). Der separate Workflow `deploy-azure.yml` reagiert ausschliesslich auf Pushes nach `main`, also auch auf einen PR-Merge. Er prüft das Release, verpackt nur Laufzeitdateien, hält ein Artefakt mit Commit-ID fest, liefert es über OIDC nach Azure aus und prüft die Commit-ID auf `/health`.
+GitHub benötigt die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. Ohne diese Variable wird der Deployment-Job übersprungen. Die Einrichtung ist in [AZURE.md](docs/AZURE.md) beschrieben.
 
-Im Azure App Service unter Einstellungen → Umgebungsvariablen/App settings `PASSWORD` anlegen. Für die LB ist der Wert der GitHub-Benutzername **BotondCsereklye**. Zusätzlich einen zufälligen, stabilen `SECRET_KEY` setzen. Änderungen speichern und den App-Neustart abwarten. Die Anwendung liest die Azure-Umgebungsvariablen; die lokale `.env` wird nicht hochgeladen. Den Erfolg durch Login auf der echten Azure-URL prüfen.
+## Aufgabe 5 Happiness
 
-GitHub erhält die OIDC-Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` und die Repository-Variable `AZURE_WEBAPP_NAME`. `PASSWORD` und `SECRET_KEY` gehören in Azure, niemals in den Quellcode. Der Release-Job prüft Tests und genau das gebaute ZIP unabhängig von der Azure-Konfiguration. Solange `AZURE_WEBAPP_NAME` fehlt, wird nur der abhängige Deployment-Job übersprungen und eine Warnung ausgegeben; das gilt nicht als erfolgreiche Auslieferung. Nach der Einrichtung kann der Workflow auf `main` auch manuell gestartet werden.
+[Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5), `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) belegen die Umsetzung. Der vorgegebene Test `test_add_entry_with_happiness` prüft Redirect, Inhalt und Stimmung. Ergänzende Tests prüfen Darstellung, Standardwert und ungültige Eingaben. Die Funktion ist in `dev` und `main` enthalten.
 
-## Aufgabe 5 Happiness über GitHub Flow
-
-Eine eigene Issue und ein aus `dev` erstellter Feature-Branch dokumentieren die Änderung. Der vorgegebene Test `test_add_entry_with_happiness` prüft POST `/add_entry`, Redirect `/`, Inhalt und Stimmung `😃`. Die `client`-Fixture meldet den Testclient an; die Eintragsliste wird vor und nach jedem Test geleert.
-
-[Issue #5](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/issues/5) wurde über `feature/5-happiness` und [PR #6](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/6) nach erfolgreicher GitHub-CI in `dev` umgesetzt. Der Feature-Branch bleibt erhalten. Der Funktionsstand 0.2.0 liegt inzwischen auf `dev` und durch [PR #8](https://github.com/BotondCsereklye/CsereklyeBotondLB-324/pull/8) auch auf `main`; eine erfolgreiche Azure-Auslieferung steht weiterhin aus.
-
-Tatsächliche Issues, Branches, PRs, Commits und Prüfergebnisse stehen mit ihrem jeweiligen Prüfdatum in [docs/NACHWEISE.md](docs/NACHWEISE.md). Die bisherigen Browserprüfungen auf Desktop/Mobilansicht und die neue HTTP-Artefaktprüfung sind getrennte Nachweise. Es wird kein fremdes Review behauptet.
+Der Happiness-Branch wird gemäss LB nicht gelöscht.
 
 ## Artefakte und Abgabe
 
-`python scripts/package_release.py` erstellt `dist/deploy.zip` und dessen SHA-256. Das ZIP enthält nur App, Runtime-Abhängigkeiten, Templates, CSS und Versionsdatei; weder `.env` noch `.venv`, Tests oder Unterrichtsdateien.
+`python scripts/package_release.py` erstellt `dist/deploy.zip` mit SHA-256 sowie `release.json` mit Version, Commit und Dateihashes. Enthalten sind nur Laufzeitdateien.
 
-Den tatsächlichen Release-Commit mit `git rev-parse HEAD` ermitteln und dann `python scripts/smoke_runtime.py dist/deploy.zip --expected-commit <Commit-ID>` ausführen. Der Befehl prüft Login, Eintrag, Stimmung, Escaping, Logout und Release-ID und beendet den Testprozess anschliessend. Gunicorn und diese Prüfung benötigen macOS oder Linux; die CI verwendet Linux.
+Auf Linux/macOS lässt sich das ZIP mit folgendem Befehl prüfen:
 
-Moodle erhält die Repository-URL und `CsereklyeBotondLB-324.zip` mit genau einem gleichnamigen Ordner. Vor dem Upload [docs/ABGABECHECK.md](docs/ABGABECHECK.md) selbst prüfen. Azure, Moodle-Upload und die verlangte Löschung nach tatsächlichem Abschluss werden nicht fälschlich als erledigt angegeben.
+```bash
+python scripts/smoke_runtime.py dist/deploy.zip --expected-commit <vollständige-Commit-ID>
+```
 
-Das Abgabe-ZIP enthält den lokal geprüften Stand samt Dokumentation, jedoch keine `.git`-Daten. Die zusätzliche Datei `CsereklyeBotondLB-324.bundle` sichert die vollständige Git-Historie und die vorhandenen Branches für die Handprüfung. Bei Bedarf mit `git clone CsereklyeBotondLB-324.bundle` in einen neuen Ordner klonen; die Hooks danach wie oben installieren.
+Die Commit-ID liefert `git rev-parse HEAD`.
 
-Grundlagen: Modulaufträge zu Anforderungen, pytest, Hooks, GitHub Flow und CI. Die konkreten Abweichungen der LB (Tests bei Push, Zielast dev, Stimmung) haben Vorrang. Technische Quellen: [pre-commit Hook-Stufen](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages), [GitHub Workflow-Syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), [Azure GitHub-Actions-Deployment](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions), [Azure Python-Konfiguration](https://learn.microsoft.com/en-us/azure/app-service/configure-language-python).
+Auf Moodle werden Repository-URL und `CsereklyeBotondLB-324.zip` abgegeben. Das Archiv enthält genau einen gleichnamigen Projektordner mit Code, Tests und Dokumentation. `.env`, `.venv` und `.git` gehören nicht hinein. Das endgültige Archiv wird nach dem Deployment aus dem finalen Stand erstellt und anhand der [Abgabecheckliste](docs/ABGABECHECK.md) geprüft.
+
+Quellen: [pre-commit](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages), [GitHub Workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), [Azure-Deployment](https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions).
